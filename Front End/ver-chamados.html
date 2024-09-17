@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./globals/css/style.css">
+    <link rel="stylesheet" href="./ver-chamados/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+
+    <title>SIGMP - Cadastrar Chamado</title>
+
+    <script type="module" src="./ver-chamados/js/ver-chamado.js"></script>
+</head>
+<body>
+    <header class="cabecalho-container">
+        <img class="logo" src="./globals/imagens/logo_sumai.png" alt="">
+        <nav class="nav-container">
+            <a href="./ver-chamados.html" class="cabecalho-link">
+                <img src="./globals/imagens/icones/calendario.svg" alt="">
+                <p>Ver Chamados</p>
+            </a>
+            <a href="./cadastrar-chamados.html" class="cabecalho-link">
+                <img src="./globals/imagens/icones/calendario-add.svg" alt="">
+                <p>Cadastrar Chamados</p>
+            </a>
+            <a href="#" class="cabecalho-link logout">
+                <img src="./globals/imagens/icones/sair.svg" alt="">
+                <p>Sair do Sistema</p>
+            </a>
+        </nav>
+        <button class="burguerMenu">
+            <img src="./globals/imagens/icones/menu.svg" alt="">
+        </button>
+    </header>
+    <div class="burguerMenu-info">
+        <a href="./ver-chamados.html" class="cabecalho-link burguerMenu-itens">
+            <img src="./globals/imagens/icones/calendario.svg" alt="">
+            <p>Ver Chamados</p>
+        </a>
+        <a href="./cadastrar-chamados.html" class="cabecalho-link burguerMenu-itens">
+            <img src="./globals/imagens/icones/calendario-add.svg" alt="">
+            <p>Cadastrar Chamados</p>
+        </a>
+        <a href="#" class="cabecalho-link burguerMenu-itens logout">
+            <img src="./globals/imagens/icones/sair.svg" alt="">
+            <p>Sair do Sistema</p>
+        </a>
+    </div>
+    <main class="main-container">
+        <section class="main-section">
+            <h1>Ver Chamados</h1>
+            <form class="form-busca">
+                <div>
+                    <div class="form-area">
+                        <label for="campus">Campus:</label>
+                        <select name="campus" id="campus">
+                            <option value="">Ondina</option>
+                            <option value="">Canela</option>
+                            <option value="">Federação</option>
+                            <option value="">Cabula</option>
+                        </select>
+                    </div>
+                    <div class="form-area">
+                        <label for="data">Data:</label>
+                        <input type="date" id="data">
+                    </div>
+                </div>
+                <button>Buscar</button>
+            </form>
+
+            <h2>Chamados Achados:</h2>
+
+            <ul class="listaChamados">
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="reproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="pending"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+                <li>
+                    <div class="chamados-info">
+                        <div>
+                            <p>Sala da Reitoria</p>
+                            <span class="status" data-status="aproved"></span>
+                        </div>
+                        <p>Canela - Reitoria</p>
+                    </div>
+                    <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+                </li>
+            </ul>
+                
+
+
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <p>Desenvolvido por <a href="https://lucasperrone21.github.io/Portfolio/">Lucas Perrone</a> | © 2024 Todos os direitos reservados.</p>
+        <div class="rodape-social-container">
+            <a href="https://br.linkedin.com/in/lucasperrone21" class="rodape-social">
+                <img src="./globals/imagens/icones/linkedin.svg" alt="">
+                <p>LinkedIn</p>
+            </a>
+            <a href="https://github.com/LucasPerrone21" class="rodape-social">
+                <img src="./globals/imagens/icones/github.svg" alt="">
+                <p>GitHub</p>
+            </a>
+        </div>
+    </footer>
+
+    
+</body>
+</html>

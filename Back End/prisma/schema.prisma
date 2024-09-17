@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String                  @id @default(cuid())
+  email             String                  @unique
+  name              String?
+  password          String
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+  TechnicalManagers TechnicalManagers[]
+}
+
+model Campus {
+  id        Int      @id @default(autoincrement())
+  name      String
+  address   String
+  units     Unit[]
+}
+
+model Unit {
+  id          Int         @id @default(autoincrement())
+  name        String
+  campus      Campus      @relation(fields: [id_campus], references: [id])
+  id_campus   Int
+  cod_sipac   Int
+  latitude    Float
+  longitude   Float
+  Works       Works[]
+}
+
+model TechnicalManagers {
+  id          Int         @id @default(autoincrement())
+  id_user     String      @unique
+  user        User        @relation(fields: [id_user], references: [id])
+  id_company  Int
+  company     Companies   @relation(fields: [id_company], references: [id])
+}
+
+model Companies{
+  id                Int                     @id @default(autoincrement())
+  name              String
+  email             String
+  cnpj              String                  @unique
+  tel               String
+  workers           Workers[]
+  technicalManagers TechnicalManagers[]
+  WorkerFunction    WorkerFunction[]
+  Works             Works[]
+
+}
+
+model Workers{
+  id                Int         @id @default(autoincrement())
+  name              String
+  email             String?
+  id_company        Int
+  id_function       Int
+  function          WorkerFunction @relation(fields: [id_function], references: [id])
+  company           Companies   @relation(fields: [id_company], references: [id])
+  WorksWorkers      WorksWorkers[]
+}
+
+model WorkerFunction{
+  id                Int         @id @default(autoincrement())
+  name              String
+  id_company        Int
+  company           Companies   @relation(fields: [id_company], references: [id])
+  workers           Workers[]
+}
+
+model Works{
+  id                Int         @id @default(autoincrement())
+  id_unit           Int
+  id_company        Int
+  place             String
+  date              DateTime
+  unit              Unit        @relation(fields: [id_unit], references: [id])
+  company           Companies   @relation(fields: [id_company], references: [id])
+  WorksWorkers      WorksWorkers[]
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+}
+
+model WorksWorkers{
+  id                Int         @id @default(autoincrement())
+  id_work           Int
+  id_worker         Int
+  work              Works       @relation(fields: [id_work], references: [id])
+  worker            Workers     @relation(fields: [id_worker], references: [id])
+}
+
+
