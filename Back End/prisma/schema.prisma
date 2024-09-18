@@ -20,7 +20,25 @@ model User {
   password          String
   createdAt         DateTime                @default(now())
   updatedAt         DateTime                @updatedAt
-  TechnicalManagers TechnicalManagers[]
+  access            Access[]
+}
+
+model Access {
+  id        String      @id @default(cuid())
+  user_id   String
+  user      User     @relation(fields: [user_id], references: [id])
+  role      Role
+  company_id Int?
+  company   Companies? @relation(fields: [company_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+enum Role {
+  SUPERADMIN
+  TECHNICAL_ADMIN
+  TECHNICAL_MANAGER
 }
 
 model Campus {
@@ -41,13 +59,6 @@ model Unit {
   Works       Works[]
 }
 
-model TechnicalManagers {
-  id          Int         @id @default(autoincrement())
-  id_user     String      @unique
-  user        User        @relation(fields: [id_user], references: [id])
-  id_company  Int
-  company     Companies   @relation(fields: [id_company], references: [id])
-}
 
 model Companies{
   id                Int                     @id @default(autoincrement())
@@ -56,10 +67,9 @@ model Companies{
   cnpj              String                  @unique
   tel               String
   workers           Workers[]
-  technicalManagers TechnicalManagers[]
   WorkerFunction    WorkerFunction[]
   Works             Works[]
-
+  access            Access[]
 }
 
 model Workers{
@@ -90,8 +100,15 @@ model Works{
   unit              Unit        @relation(fields: [id_unit], references: [id])
   company           Companies   @relation(fields: [id_company], references: [id])
   WorksWorkers      WorksWorkers[]
+  status            WorkStatus  @default(PENDING)
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
+}
+
+enum WorkStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
 }
 
 model WorksWorkers{

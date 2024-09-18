@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export default class CompanyController {
     async register(req: Request, res: Response) {
-        const {name, email, password, tel, cnpj} = req.body;
+        const {name, email, tel, cnpj} = req.body;
         const companySchema = z.object({
             name: z.string(),
             email: z.string().email(),
@@ -19,7 +19,7 @@ export default class CompanyController {
             return res.status(400).json({error: result.error});
         }
 
-        await db.companies.create({data: {name, email, password, cnpj,  tel}});
+        await db.companies.create({data: {name, email, cnpj,  tel}});
     }
 
     

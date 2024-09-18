@@ -13,7 +13,7 @@ export default async function verUnidades(){
             },
             credentials: 'include',
         }
-        const campusList = await (await fetch(`${apiUrl}/campus/list` , options)).json();
+        const campusList = await (await fetch(`${apiUrl}/campus` , options)).json();
         
         campusList.sort((a, b) => a.name.localeCompare(b.nome));
 
@@ -43,7 +43,7 @@ export default async function verUnidades(){
                 },
                 credentials: 'include',
             }
-            const unidadesList = await (await fetch(`${apiUrl}/unit/list/${id}` , options)).json();
+            const unidadesList = await (await fetch(`${apiUrl}/unit/${id}` , options)).json();
             unidadesList.sort((a, b) => a.name.localeCompare(b.nome));
             unidadesList.forEach((unidade) => {
                 const option = document.createElement('option');

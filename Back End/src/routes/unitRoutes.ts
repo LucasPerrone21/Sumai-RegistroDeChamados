@@ -6,6 +6,6 @@ const unitRoutes = Router();
 const unitController = new UnitController();
 
 unitRoutes.post("/register",checkAuth, unitController.register);
-unitRoutes.get("/list/:id",checkAuth, unitController.listByCampus);
+unitRoutes.get("/:id",checkAuth, unitController.listByCampus);
 
 export default unitRoutes;
