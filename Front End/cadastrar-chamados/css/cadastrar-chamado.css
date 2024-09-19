@@ -56,7 +56,10 @@
     border-radius: 10px;
     font-size: 1rem;
     font-family: 'Roboto', sans-serif;
+    width: 100%;
+    box-sizing: border-box;
 }
+
 .containerBusca{
     position: relative;
     width: 100%;
@@ -341,6 +344,15 @@
         border-radius: 0;
     }
 
+    .containerBusca ul li{
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .containerBusca li p:last-of-type{
+        font-size: 0.8rem;
+
+    }
     
     
 }

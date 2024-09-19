@@ -1,33 +1,51 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import db from "../database/db";
-import jwt from "jsonwebtoken";
-import { date } from "zod";
+
 
 export class WorkersController {
     async getWorkers(req: Request, res: Response) {
-        // MELHORE A LÓGICA AQUI
+        const permission = req.cookies.permission;
+        try {
+            const company = await db.access.findFirst({
+                where:{
+                    id: permission
+                },
+                select: {
+                    company_id: true
+                }
+            })
+        
 
-        const workers = await db.workers.findMany({
-            select: {
-                id: true,
-                name: true,
-                function: {
-                    select: {
-                        name: true,
+            const workers = await db.workers.findMany({
+                select: {
+                    id: true,
+                    name: true,
+                    function: {
+                        select: {
+                            name: true,
+                        },
                     },
                 },
-            },
-        });
+                where:{
+                    company: {
+                        id: company?.company_id ?? -1
+                    }
+                }
+            });
 
 
-        const formattedWorkers = workers.map((worker) => ({
-            id: worker.id,
-            name: worker.name,
-            function: worker.function.name,
-        }));
+            const formattedWorkers = workers.map((worker) => ({
+                id: worker.id,
+                name: worker.name,
+                function: worker.function.name,
+            }));
 
-        res.status(200).json(formattedWorkers);
+            res.status(200).json(formattedWorkers);
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao buscar trabalhadores" });
+        }
     }
+
 
     async getWorker(req: Request, res: Response) {
 

@@ -41,7 +41,7 @@ export default class AuthController{
                         {role: {equals: 'SUPERADMIN'}}
                     ]
                 }});
-            console.log(userPermission);
+                
             if(!userPermission){
                 return res.status(401).json({ message: 'Usuário não autorizado' });
             }
@@ -80,6 +80,7 @@ export default class AuthController{
 
     async logout(req: Request, res: Response){
         res.clearCookie('token');
+        res.clearCookie('permission');
         return res.status(200).json({ message: 'Logout realizado com sucesso' });
     }
 

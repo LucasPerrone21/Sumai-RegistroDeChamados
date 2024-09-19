@@ -21,6 +21,7 @@ model User {
   createdAt         DateTime                @default(now())
   updatedAt         DateTime                @updatedAt
   access            Access[]
+  works             Works[]
 }
 
 model Access {
@@ -81,6 +82,8 @@ model Workers{
   function          WorkerFunction @relation(fields: [id_function], references: [id])
   company           Companies   @relation(fields: [id_company], references: [id])
   WorksWorkers      WorksWorkers[]
+
+  
 }
 
 model WorkerFunction{
@@ -103,6 +106,9 @@ model Works{
   status            WorkStatus  @default(PENDING)
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
+  createdBy         String
+  user_id           User        @relation(fields: [createdBy], references: [id])
+  aprovedBy         String     @default("N/A")
 }
 
 enum WorkStatus {
