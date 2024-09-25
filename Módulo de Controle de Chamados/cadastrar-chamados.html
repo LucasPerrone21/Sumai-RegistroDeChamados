@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./globals/css/style.css">
+    <link rel="stylesheet" href="./cadastrar-chamados/css/cadastrar-chamado.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <title>SIGMP - Cadastrar Chamado</title>
+
+    <script type="module" src="./cadastrar-chamados/js/add-chamado.js"></script>
+
+</head>
+<body>
+    <header class="cabecalho-container">
+        <img class="logo" src="./globals/imagens/logo_sumai.png" alt="">
+        <nav class="nav-container">
+            <a href="./ver-chamados.html" class="cabecalho-link">
+                <img src="./globals/imagens/icones/calendario.svg" alt="">
+                <p>Ver Chamados</p>
+            </a>
+            <a href="./cadastrar-chamados.html" class="cabecalho-link">
+                <img src="./globals/imagens/icones/calendario-add.svg" alt="">
+                <p>Cadastrar Chamados</p>
+            </a>
+            <a href="#" class="cabecalho-link logout">
+                <img src="./globals/imagens/icones/sair.svg" alt="">
+                <p>Sair do Sistema</p>
+            </a>
+        </nav>
+        <button class="burguerMenu">
+            <img src="./globals/imagens/icones/menu.svg" alt="">
+        </button>
+    </header>
+    <div class="burguerMenu-info">
+        <a href="./ver-chamados.html" class="cabecalho-link burguerMenu-itens">
+            <img src="./globals/imagens/icones/calendario.svg" alt="">
+            <p>Ver Chamados</p>
+        </a>
+        <a href="./cadastrar-chamados.html" class="cabecalho-link burguerMenu-itens">
+            <img src="./globals/imagens/icones/calendario-add.svg" alt="">
+            <p>Cadastrar Chamados</p>
+        </a>
+        <a href="#" class="cabecalho-link burguerMenu-itens logout">
+            <img src="./globals/imagens/icones/sair.svg" alt="">
+            <p>Sair do Sistema</p>
+        </a>
+    </div>
+    <main class="main-container">
+        <section class="main-section">
+            <h1>Adicionar Chamado</h1>
+            <form action="" class="form-container">
+                <div class="form-group-container">
+                    <div class="form-group">
+                        <label for="campus">Campus:</label>
+                        <select name="campus" id="campus">
+                            <option value="campus1">Ondina</option>
+                            <option value="campus2">Canela</option>
+                            <option value="campus3">Federação</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="data">Data:</label>
+                        <input type="date" id="data">
+                    </div>
+                </div>
+                <div class="form-group-container">
+                    <div class="form-group">
+                        <label for="unidade">Unidade:</label>
+                        <select name="unidade" id="unidade">
+                            <option value="unidade1">Ondina</option>
+                            <option value="unidade2">Canela</option>
+                            <option value="unidade3">Federação</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="local">Local:</label>
+                        <input type="text" id="local" placeholder="Ex: Sala 207" autocomplete="off">
+                    </div>
+                </div>
+                <label for="busca">Buscar Funcionários:</label>
+                <div class="containerBusca">
+                    <input type="search" id="busca" autocomplete="off" placeholder="Ex: Lucas Perrone">
+                    <ul>
+                    </ul>
+                </div>
+                <div class="funcionarios-container">
+                    
+                </div>
+                <div class="containerBotoes">
+                    <a href="./home.html">Cancelar</a>
+                    <button type="submit">Cadastrar</button>
+                </div>
+            </form>
+            
+        </section>
+    </main>
+    <footer class="rodape">
+        <p>Desenvolvido por <a href="https://lucasperrone21.github.io/Portfolio/">Lucas Perrone</a> | © 2024 Todos os direitos reservados.</p>
+        <div class="rodape-social-container">
+            <a href="https://br.linkedin.com/in/lucasperrone21" class="rodape-social">
+                <img src="./globals/imagens/icones/linkedin.svg" alt="">
+                <p>LinkedIn</p>
+            </a>
+            <a href="https://github.com/LucasPerrone21" class="rodape-social">
+                <img src="./globals/imagens/icones/github.svg" alt="">
+                <p>GitHub</p>
+            </a>
+        </div>
+    </footer>
+
+
+    <section class="modalContainer" data-tipo="prosseguir">
+        <div class="modal">
+            <h3>Confirmar Chamado?</h3>
+            <p>Deseja realmente enviar este chamado para a revisão?</p>
+            <div>
+                <button class="btnRevisao">Revisar</button>
+                <button class="btnConfirmar">Confirmar</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="modalContainer" data-tipo="deletar">
+        <div class="modal">
+            <h3>Excluir Funcionário?</h3>
+            <p>Deseja realmente excluir <span class="negrito">Robervaldo Fonseca da Cruz Ramos</span> deste chamado?<p>
+            <div>
+                <button class="btnRevisao">Voltar</button>
+                <button class="btnExcluir">Excluir</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="modalContainer" data-tipo="chamadoEnviado">
+        <div class="modal">
+            <h3>Chamado Enviado!</h3>
+            <p>O chamado foi enviado, aguarde a sua central aprova-lo para poder iniciar o atendimento!<p>
+            <div>
+                <button class="btnEnviado">Ok</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="modalContainer" data-tipo="chamado-addFunc">
+        <div class="modal">
+            <h3>Adicionar Funcionário?</h3>
+            <p>Tem certeza que deseja adicionar <span id="funcName" class="negrito"></span> a este chamado?<p>
+            <div>
+                <div>
+                    <button class="btnRevisao">Voltar</button>
+                    <button class="btnConfirmar">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

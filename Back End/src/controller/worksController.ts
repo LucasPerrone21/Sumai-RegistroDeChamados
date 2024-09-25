@@ -49,10 +49,12 @@ export class WorksController {
         }
     }
     
-    async getWorksByDate(req: Request, res: Response) {
+    async getWorksInCampusByDate(req: Request, res: Response) {
         const permission = req.cookies.permission;
         const company = await getCompanyByUser(permission);
-        const { date } = req.body;
+        const campus_id = parseInt(req.params.campus_id);
+        const date = req.params.date as string;
+        
         
         let formatedDate
 
@@ -68,6 +70,8 @@ export class WorksController {
         const endOfDay = new Date(formatedDate);
         endOfDay.setHours(23,59,59,999);
 
+        console.log(startOfDay, endOfDay);
+
         if(!company){
             return res.status(401).json({ message: 'Usuário não autorizado' });
         }
@@ -80,6 +84,9 @@ export class WorksController {
                 date: {
                     gte: startOfDay,
                     lte: endOfDay
+                },
+                unit:{
+                    id_campus: campus_id
                 }
             },
             select:{
@@ -89,7 +96,12 @@ export class WorksController {
                 status: true,
                 unit: {
                     select: {
-                        name: true
+                        name: true,
+                        campus: {
+                            select: {
+                                name: true
+                            }
+                        }
                     }
                 },
                 WorksWorkers: {
@@ -114,6 +126,7 @@ export class WorksController {
             date: work.date,
             place: work.place,
             unit: work.unit.name,
+            campus: work.unit.campus.name,
             status: work.status,
             workers: work.WorksWorkers.map((worker) => ({
                 name: worker.worker.name,
@@ -121,6 +134,74 @@ export class WorksController {
             }))
         }));
         
-        res.status(200).json(formattedWorks);
+
+        if(formattedWorks.length === 0){
+            return res.status(404).json({ message: 'Nenhum chamado encontrado' });
+        }
+        return res.status(200).json(formattedWorks);
+    }
+
+    async getWorkById(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+
+        try{
+            const work = await db.works.findFirst({
+                select: {
+                    id: true,
+                    date: true,
+                    place: true,
+                    status: true,
+                    unit: {
+                        select: {
+                            name: true,
+                            campus: {
+                                select: {
+                                    name: true
+                                }
+                            }
+                        }
+                    },
+                    WorksWorkers: {
+                        select: {
+                            worker: {
+                                select: {
+                                    name: true,
+                                    function: {
+                                        select: {
+                                            name: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                where: {
+                    id
+                }
+            })
+
+            if(!work){
+                return res.status(404).json({ message: 'Chamado não encontrado' });
+            }
+
+            const formattedWork = {
+                id: work.id,
+                date: work.date,
+                place: work.place,
+                unit: work.unit.name,
+                campus: work.unit.campus.name,
+                status: work.status,
+                workers: work.WorksWorkers.map((worker) => ({
+                    name: worker.worker.name,
+                    function: worker.worker.function.name
+                }))
+            }
+
+            return res.status(200).json(formattedWork);
+        }
+        catch(error){
+            return res.status(500).json({ message: 'Erro ao buscar chamado' });
+        }
     }
 }

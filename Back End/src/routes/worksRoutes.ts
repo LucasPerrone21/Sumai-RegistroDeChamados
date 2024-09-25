@@ -6,6 +6,7 @@ const worksRoute = Router();
 const worksController = new WorksController();
 
 worksRoute.post("/",checkAuth , worksController.registerWork);
-worksRoute.get("/", checkAuth, worksController.getWorksByDate);
+worksRoute.get("/:campus_id/:date", checkAuth, worksController.getWorksInCampusByDate);
+worksRoute.get("/:id", checkAuth, worksController.getWorkById);
 
 export default worksRoute;

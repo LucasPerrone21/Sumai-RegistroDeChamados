@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import { z } from 'zod';
 import db from '../database/db';
 import bcrypt from 'bcrypt';
+import getUserByToken from '../midlewares/getUserByToken';
 
 export default class UserController {
     async register(req: Request, res: Response) {
@@ -35,6 +36,22 @@ export default class UserController {
         } catch (error:any) {
             return res.status(500).json({ message: 'Não foi possível cadastrar o usuário' });
         }
+    }
+
+    async getUserInfo(req: Request, res: Response) {
+        const user = await getUserByToken(req);
+
+        if(!user){
+            return res.status(401).json({ message: 'Usuário não autorizado' });
+        }
+
+        const formatedUser = {
+            email: user.email,
+            name: user.name,
+            created_at: user.createdAt
+        }
+
+        return res.status(200).json(formatedUser);
     }
 }
 

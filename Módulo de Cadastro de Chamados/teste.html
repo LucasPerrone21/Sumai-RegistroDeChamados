@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myChart" width="600" height="400"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+    <script>
+        data = {
+    datasets: [{
+        data: [50, 15, 27]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Ondina',
+        'Canela',
+        'Federação'
+    ]
+    };
+
+var ctx = document.getElementById("myChart").getContext("2d");
+new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: {
+        responsive: false,
+        legend: {
+            display: false
+        }
+    }
+});
+//new Chart(ctx).Doughnut(data);
+    </script>
+</html>

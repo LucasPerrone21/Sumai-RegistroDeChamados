@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import jwt, { decode } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import db from '../database/db';
 
 
