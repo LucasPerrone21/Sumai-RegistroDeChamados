@@ -1,9 +1,9 @@
 import e, {Request, Response} from 'express';
 import { z } from 'zod';
-import db from '../../database/db';
+import db from '../database/db';
 import bcrypt from 'bcrypt';
 import jwt  from 'jsonwebtoken';
-import { env } from '../../enviroment/env';
+import { env } from '../enviroment/env';
 
 
 export default class AuthController{
@@ -33,42 +33,22 @@ export default class AuthController{
         // Checar permissão do usuário
 
         try{
-            const userPermission = await db.access.findFirst({where:
-                {
-                    user_id: user.id,
-                    OR: [
-                        {role: {equals: 'TECHNICAL_MANAGER'}},
-                        {role: {equals: 'SUPERADMIN'}}
-                    ]
-                }});
-                
-            if(!userPermission){
-                return res.status(401).json({ message: 'Usuário não autorizado' });
-            }
+            const permissions = await db.access.findMany({
+                where:{
+                    user_id: user.id
+                }
+            });
 
-            const payloadToken = {
-                email: user.email,
-                permissions: userPermission.company_id
-            }
-            const secret = env?.APP_SECRET;
-            const token = jwt.sign(payloadToken, secret as string, {expiresIn: '8h'});
-            
-            
+            const userPermissions = permissions.map((item) => item.id);
+            const token = jwt.sign({email: user.email, company: user.company_id , permissions: userPermissions}, env?.APP_SECRET as string, {expiresIn: '8h'});
+
             res.cookie('token', token, {
                 httpOnly: true,
-                secure: true,
-                maxAge: 8 * 60 * 60 * 1000,
-                sameSite: 'none'
+                secure: env?.APP_ENVIROMENT === 'production',
+                sameSite: 'strict',
+                maxAge: 1000 * 60 * 60 * 8
             });
-
-            res.cookie('permission', userPermission.id, {
-                httpOnly: true,
-                secure: true,
-                maxAge: 8 * 60 * 60 * 1000,
-                sameSite: 'none'
-            });
-    
-            return res.status(200).json({ message: 'Login realizado com sucesso' });
+            return res.status(200).json({ message: 'Usuário autenticado com sucesso'});
 
 
         } catch (error) {
@@ -80,7 +60,6 @@ export default class AuthController{
 
     async logout(req: Request, res: Response){
         res.clearCookie('token');
-        res.clearCookie('permission');
         return res.status(200).json({ message: 'Logout realizado com sucesso' });
     }
 
@@ -92,7 +71,7 @@ export default class AuthController{
 
         try {
             const payload = jwt.verify(token, env?.APP_SECRET as string);
-            return res.status(200).json({ message: 'Usuário autenticado', user: payload });
+            return res.status(200).json({ message: 'Usuário autenticado'});
         } catch (error) {
             return res.status(401).json({ message: 'Não autorizado' });
         }

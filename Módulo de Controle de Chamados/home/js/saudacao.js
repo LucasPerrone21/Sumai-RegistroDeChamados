@@ -1,9 +1,7 @@
 import apiURL from "../../globals/js/apiURL.js";
 
-
-
 export default async function saudacao() {
-    const saudacao = document.querySelector("#nome");
+    const saudacao = document.querySelector("#name");
     const url = `${apiURL}/user/info`;
     const options = {
         method: "GET",
@@ -15,7 +13,9 @@ export default async function saudacao() {
 
     const user = await(await fetch(url, options)).json();
 
-    saudacao.textContent = user.name;
+    const userName = user.name.split(" ")[0];
+
+    saudacao.textContent = userName;
 
 
 }

@@ -34,7 +34,7 @@ export default class UserController {
             console.log(status);
             return res.status(201).json({ message: 'Usuário cadastrado com sucesso' });
         } catch (error:any) {
-            return res.status(500).json({ message: 'Não foi possível cadastrar o usuário' });
+            return res.status(500).json({ message: 'Não foi possível cadastrar o usuário', error: error });
         }
     }
 

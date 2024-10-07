@@ -1,22 +1,19 @@
 import { Request, Response } from "express";
 import db from "../database/db";
+import jwt from 'jsonwebtoken';
 
 
 export class WorkersController {
     async getWorkers(req: Request, res: Response) {
-        const permission = req.cookies.permission;
-        try {
-            const company = await db.access.findFirst({
-                where:{
-                    id: permission
-                },
-                select: {
-                    company_id: true
-                }
-            })
-        
 
-            const workers = await db.workers.findMany({
+
+        const token = req.cookies.token;
+        const decodedToken = jwt.decode(token as string) as { email: string, permissions: string[], company: number };
+
+        try {
+            let workers;
+            if (decodedToken.company === 1){
+               workers = await db.workers.findMany({
                 select: {
                     id: true,
                     name: true,
@@ -26,12 +23,26 @@ export class WorkersController {
                         },
                     },
                 },
-                where:{
-                    company: {
-                        id: company?.company_id ?? -1
+               })
+            }
+            else{
+                workers = await db.workers.findMany({
+                    select: {
+                        id: true,
+                        name: true,
+                        function: {
+                            select: {
+                                name: true,
+                            },
+                        },
+                    },
+                    where:{
+                        company: {
+                            id: decodedToken.company
+                        }
                     }
-                }
-            });
+                });
+            }
 
 
             const formattedWorkers = workers.map((worker) => ({

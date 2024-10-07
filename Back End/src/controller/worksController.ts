@@ -6,6 +6,7 @@ import getUserByToken from "../midlewares/getUserByToken";
 export class WorksController {
     async registerWork(req: Request, res: Response) {
         const { unit, date, place, workers} = req.body;
+        const company = await getCompanyByUser(req);
 
         if(!unit || !date || !place || !workers){
             return res.status(400).json({ message: 'Preencha todos os campos' });
@@ -22,7 +23,7 @@ export class WorksController {
             }
 
             const dateWithTimestamp = new Date(date);
-            const dateWithoutTimestamp = new Date(dateWithTimestamp.getFullYear(), dateWithTimestamp.getMonth(), dateWithTimestamp.getDate());
+            const dateWithoutTimestamp = dateWithTimestamp.toISOString()
             const newWork = await db.works.create({
                 data:{
                     unit:{
@@ -32,7 +33,7 @@ export class WorksController {
                         connect: { id: user_id }
                     },
                     company: {
-                        connect: { id: 1 }
+                        connect: { id: company }
                     },
                     date: dateWithoutTimestamp,
                     place,
@@ -50,11 +51,9 @@ export class WorksController {
     }
     
     async getWorksInCampusByDate(req: Request, res: Response) {
-        const permission = req.cookies.permission;
-        const company = await getCompanyByUser(permission);
+        const company = await getCompanyByUser(req)
         const campus_id = parseInt(req.params.campus_id);
         const date = req.params.date as string;
-        
         
         let formatedDate
 
@@ -66,11 +65,9 @@ export class WorksController {
         }
 
         const startOfDay = new Date(formatedDate);
-        startOfDay.setHours(0,0,0,0);
+        startOfDay.setHours(0,0,0,1);
         const endOfDay = new Date(formatedDate);
         endOfDay.setHours(23,59,59,999);
-
-        console.log(startOfDay, endOfDay);
 
         if(!company){
             return res.status(401).json({ message: 'Usuário não autorizado' });
@@ -203,5 +200,84 @@ export class WorksController {
         catch(error){
             return res.status(500).json({ message: 'Erro ao buscar chamado' });
         }
+    }
+
+    async getEveryWorkByDate(req: Request, res: Response) {
+        const company = await getCompanyByUser(req);
+        console.log(company);
+        const date = req.params.date as string;
+        let formatedDate
+        if(date){
+            formatedDate = new Date(date).toISOString();
+        }
+        else{
+            formatedDate = new Date().toISOString();
+        }
+        const startOfDay = new Date(formatedDate);
+        startOfDay.setHours(0,0,0,0);
+        const endOfDay = new Date(formatedDate);
+        endOfDay.setHours(23,59,59,999);
+        if(!company){
+            return res.status(401).json({ message: 'Usuário não autorizado' });
+        }
+        const works = await db.works.findMany({
+            where:{
+                company: {
+                    id: company
+                },
+                date: {
+                    gte: startOfDay,
+                    lte: endOfDay
+                }
+            },
+            select:{
+                id: true,
+                date: true,
+                place: true,
+                status: true,
+                unit: {
+                    select: {
+                        name: true,
+                        campus: {
+                            select: {
+                                name: true
+                            }
+                        }
+                    }
+                },
+                WorksWorkers: {
+                    select: {
+                        worker: {
+                            select: {
+                                name: true,
+                                function: {
+                                    select: {
+                                        name: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+       /*  const formattedWorks = works.map((work) => ({
+            id: work.id,
+            date: work.date,
+            place: work.place,
+            unit: work.unit.name,
+            campus: work.unit.campus.name,
+            status: work.status,
+            workers: work.WorksWorkers.map((worker) => ({
+                name: worker.worker.name,
+                function: worker.worker.function.name
+            }))
+        })); */
+
+        if(works.length === 0){
+            return res.status(404).json({ message: 'Nenhum chamado encontrado' });
+        }
+
+        return res.status(200).json(works);
     }
 }

@@ -18,6 +18,8 @@ model User {
   email             String                  @unique
   name              String?
   password          String
+  company_id        Int?                    @default(1)
+  company           Companies?              @relation(fields: [company_id], references: [id])
   createdAt         DateTime                @default(now())
   updatedAt         DateTime                @updatedAt
   access            Access[]
@@ -71,6 +73,8 @@ model Companies{
   WorkerFunction    WorkerFunction[]
   Works             Works[]
   access            Access[]
+  users             User[]
+  
 }
 
 model Workers{

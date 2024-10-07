@@ -33,15 +33,15 @@
     padding: 0.75rem 1rem;
     border-radius: 10px;
     background-color: var(--branco-fundo);
-    border: 1px solid var(--cinza-fundo);
+    border: 1px solid var(--cinza-principal);
 }
 
 .login button{
     font-size: 1rem;
     padding: 0.75rem 1rem;
     border-radius: 10px;
-    background-color: var(--verde-logo-sumai);
-    border: 1px solid var(--cinza-fundo);
+    background-color: var(--verde-primario);
+    border: none;
     color: var(--branco-fundo);
     cursor: pointer;
     display: flex;
@@ -50,8 +50,13 @@
     transition: 200ms;
 }
 
+.login div{
+    display: flex;
+    flex-direction: column;
+}
+
 .login button:hover{
-    background-color: #4a9c0e;
+    background-color: var(--verde-secundario);
 }
 
 .login input.error{

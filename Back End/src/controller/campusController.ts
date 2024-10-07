@@ -14,6 +14,7 @@ export default class CampusController {
     async list(req: Request, res: Response) {
         try {
             const campus = await db.campus.findMany();
+            
             return res.status(200).json(campus);
         }catch (error) {
             return res.status(400).json({message: "Não foi possível listar os campus"});

@@ -81,11 +81,6 @@ export default function abrirBusca() {
     }
 
     function addFuncionario(event){
-        inputBusca.value = '';
-        itens.forEach(item => {
-            buscaResultados.appendChild(item);
-        })
-        fecharMenuBusca(event);
         const li = event.target.closest('li');
         const id = li.dataset.id;
         addFuncionarioChamado(id);

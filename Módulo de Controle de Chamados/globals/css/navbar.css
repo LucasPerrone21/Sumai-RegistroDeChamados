@@ -23,7 +23,7 @@
     text-decoration: none;
     color: white;
     padding: 1.5rem;
-    background-color: var(--azul-principal);
+    background-color: var(--laranja-primario);
     transition: 200ms;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .cabecalho-link:hover{
-    background-color: var(--azul-logo-sumai);
+    background-color: var(--laranja-secundario);
 }
 
 .burguerMenu{
@@ -46,7 +46,7 @@
 }
 
 .burguerMenu-info a:hover{
-    background-color: var(--azul-logo-sumai);
+    background-color: var(--laranja-secundario);
     cursor: pointer;
 }
 
@@ -58,7 +58,7 @@
     top: 4.5rem;
     left: 0;
     width: 100%;
-    background-color: var(--azul-principal);
+    background-color: var(--laranja-primario);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -89,7 +89,7 @@
 
 @media (max-width: 1400px){
     .cabecalho-container{
-        background-color: var(--azul-principal);
+        background-color: var(--laranja-primario);
         position: fixed;
         width: 100%;
         top: 0;
@@ -116,7 +116,7 @@
         margin: none;
         border: none;
         background-color: transparent;
-        padding-right: 10rem ;
+        margin-right: 10rem ;
     }
 
     .burguerMenu img{
@@ -136,7 +136,7 @@
 
 @media (max-width: 800px){
     .burguerMenu{
-        padding-right: 5rem;
+        margin-right: 5rem;
     }
 
     .logo{
@@ -159,7 +159,7 @@
 
 @media (max-width: 500px){
     .burguerMenu{ 
-        padding-right: 2rem;
+        margin-right: 2rem;
     }
 
     .burguerMenu img{
