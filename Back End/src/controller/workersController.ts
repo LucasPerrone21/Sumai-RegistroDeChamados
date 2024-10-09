@@ -5,8 +5,6 @@ import jwt from 'jsonwebtoken';
 
 export class WorkersController {
     async getWorkers(req: Request, res: Response) {
-
-
         const token = req.cookies.token;
         const decodedToken = jwt.decode(token as string) as { email: string, permissions: string[], company: number };
 

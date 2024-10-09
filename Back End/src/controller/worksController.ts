@@ -51,91 +51,153 @@ export class WorksController {
     }
     
     async getWorksInCampusByDate(req: Request, res: Response) {
-        const company = await getCompanyByUser(req)
-        const campus_id = parseInt(req.params.campus_id);
-        const date = req.params.date as string;
-        
-        let formatedDate
+        try{
+            const company = await getCompanyByUser(req)
+            const campus_id = parseInt(req.params.campus_id);
+            const date = req.params.date as string;
+            
+            let formatedDate
 
-        if(date){
-            formatedDate = new Date(date).toISOString();
-        }
-        else{
-            formatedDate = new Date().toISOString();
-        }
+            if(date){
+                formatedDate = new Date(date).toISOString();
+            }
+            else{
+                formatedDate = new Date().toISOString();
+            }
 
-        const startOfDay = new Date(formatedDate);
-        startOfDay.setHours(0,0,0,1);
-        const endOfDay = new Date(formatedDate);
-        endOfDay.setHours(23,59,59,999);
+            const startOfDay = new Date(formatedDate);
+            startOfDay.setHours(0,0,0,1);
+            const endOfDay = new Date(formatedDate);
+            endOfDay.setHours(23,59,59,999);
 
-        if(!company){
-            return res.status(401).json({ message: 'Usuário não autorizado' });
-        }
+            if(!company){
+                return res.status(401).json({ message: 'Usuário não autorizado' });
+            }
 
-        const works = await db.works.findMany({
-            where:{
-                company: {
-                    id: company
-                },
-                date: {
-                    gte: startOfDay,
-                    lte: endOfDay
-                },
-                unit:{
-                    id_campus: campus_id
-                }
-            },
-            select:{
-                id: true,
-                date: true,
-                place: true,
-                status: true,
-                unit: {
-                    select: {
-                        name: true,
-                        campus: {
+            let works
+            if(campus_id === 0){
+                works = await db.works.findMany({
+                    where:{
+                        company: {
+                            id: company
+                        },
+                        date: {
+                            gte: startOfDay,
+                            lte: endOfDay
+                        },
+
+                    },
+                    select:{
+                        id: true,
+                        date: true,
+                        place: true,
+                        status: true,
+                        unit: {
                             select: {
-                                name: true
+                                name: true,
+                                campus: {
+                                    select: {
+                                        name: true
+                                    }
+                                }
+                            }
+                        },
+                        WorksWorkers: {
+                            select: {
+                                worker: {
+                                    select: {
+                                        name: true,
+                                        function: {
+                                            select: {
+                                                name: true
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
+                });
+            
+                const formattedWorks = works.map((work) => ({
+                    id: work.id,
+                    date: work.date,
+                    place: work.place,
+                    unit: work.unit.name,
+                    campus: work.unit.campus.name,
+                    status: work.status,
+                    workers: work.WorksWorkers.map((worker) => ({
+                        name: worker.worker.name,
+                        function: worker.worker.function.name
+                    }))
+                }));
+            } else {       
+                works = await db.works.findMany({
+                where:{
+                    company: {
+                        id: company
+                    },
+                    date: {
+                        gte: startOfDay,
+                        lte: endOfDay
+                    },
+                    unit:{
+                        id_campus: campus_id
+                    }
                 },
-                WorksWorkers: {
-                    select: {
-                        worker: {
-                            select: {
-                                name: true,
-                                function: {
-                                    select: {
-                                        name: true
+                select:{
+                    id: true,
+                    date: true,
+                    place: true,
+                    status: true,
+                    unit: {
+                        select: {
+                            name: true,
+                            campus: {
+                                select: {
+                                    name: true
+                                }
+                            }
+                        }
+                    },
+                    WorksWorkers: {
+                        select: {
+                            worker: {
+                                select: {
+                                    name: true,
+                                    function: {
+                                        select: {
+                                            name: true
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+            });    }
+
+            const formattedWorks = works.map((work) => ({
+                id: work.id,
+                date: work.date,
+                place: work.place,
+                unit: work.unit.name,
+                campus: work.unit.campus.name,
+                status: work.status,
+                workers: work.WorksWorkers.map((worker) => ({
+                    name: worker.worker.name,
+                    function: worker.worker.function.name
+                }))
+            }));
+
+
+            if(formattedWorks.length === 0){
+                return res.status(404).json({ message: 'Nenhum chamado encontrado' });
             }
-        });
-
-        const formattedWorks = works.map((work) => ({
-            id: work.id,
-            date: work.date,
-            place: work.place,
-            unit: work.unit.name,
-            campus: work.unit.campus.name,
-            status: work.status,
-            workers: work.WorksWorkers.map((worker) => ({
-                name: worker.worker.name,
-                function: worker.worker.function.name
-            }))
-        }));
-        
-
-        if(formattedWorks.length === 0){
-            return res.status(404).json({ message: 'Nenhum chamado encontrado' });
+            return res.status(200).json(formattedWorks);
+        }catch(error){
+            return res.status(500).json({ message: 'Erro ao buscar chamados' });
         }
-        return res.status(200).json(formattedWorks);
     }
 
     async getWorkById(req: Request, res: Response) {
@@ -202,82 +264,37 @@ export class WorksController {
         }
     }
 
-    async getEveryWorkByDate(req: Request, res: Response) {
-        const company = await getCompanyByUser(req);
-        console.log(company);
-        const date = req.params.date as string;
-        let formatedDate
-        if(date){
-            formatedDate = new Date(date).toISOString();
+    async updateWorkStatus(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+        const user = await getUserByToken(req);
+        const { status } = req.body;
+
+        const username = user?.name;
+
+        if(!status){
+            return res.status(400).json({ message: 'Preencha o campo de status' });
         }
-        else{
-            formatedDate = new Date().toISOString();
-        }
-        const startOfDay = new Date(formatedDate);
-        startOfDay.setHours(0,0,0,0);
-        const endOfDay = new Date(formatedDate);
-        endOfDay.setHours(23,59,59,999);
-        if(!company){
+
+        if(!user){
             return res.status(401).json({ message: 'Usuário não autorizado' });
         }
-        const works = await db.works.findMany({
-            where:{
-                company: {
-                    id: company
-                },
-                date: {
-                    gte: startOfDay,
-                    lte: endOfDay
-                }
-            },
-            select:{
-                id: true,
-                date: true,
-                place: true,
-                status: true,
-                unit: {
-                    select: {
-                        name: true,
-                        campus: {
-                            select: {
-                                name: true
-                            }
-                        }
-                    }
-                },
-                WorksWorkers: {
-                    select: {
-                        worker: {
-                            select: {
-                                name: true,
-                                function: {
-                                    select: {
-                                        name: true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
-       /*  const formattedWorks = works.map((work) => ({
-            id: work.id,
-            date: work.date,
-            place: work.place,
-            unit: work.unit.name,
-            campus: work.unit.campus.name,
-            status: work.status,
-            workers: work.WorksWorkers.map((worker) => ({
-                name: worker.worker.name,
-                function: worker.worker.function.name
-            }))
-        })); */
 
-        if(works.length === 0){
-            return res.status(404).json({ message: 'Nenhum chamado encontrado' });
+        try{
+            const updatedWork = await db.works.update({
+                where: {
+                    id
+                },
+                data: {
+                    status,
+                    aprovedBy: username || 'N/A'
+                    
+                }
+            });
+
+            return res.status(200).json(updatedWork);
+        }catch(error){
+            return res.status(500).json({ message: 'Erro ao atualizar chamado' });
         }
-
-        return res.status(200).json(works);
     }
+
 }

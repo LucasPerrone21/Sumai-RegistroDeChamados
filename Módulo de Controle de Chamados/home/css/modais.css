@@ -24,6 +24,17 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
+.modal-mini{
+    width: 400px;
+    padding: 1rem;
+}
+
+
+.modal-mini p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
 .modal h3{
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -44,11 +55,11 @@
 }
 
 
-.modalStatus[data-modal_status="APROVED"]{
+.modalStatus[data-modal_status="ACCEPTED"]{
     color: var(--verde-secundario);
 }
 
-.modalStatus[data-modal_status="APROVED"]::selection{
+.modalStatus[data-modal_status="ACCEPTED"]::selection{
     color: var(--branco-fundo);
     background-color: var(--verde-secundario);
 }
@@ -160,3 +171,4 @@
     background-color: var(--azul-secundario);
     color: var(--branco-fundo);
 }
+

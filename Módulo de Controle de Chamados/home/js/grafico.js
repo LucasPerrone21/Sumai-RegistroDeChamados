@@ -1,11 +1,23 @@
-export default function grafico(){
+export default function gerarGrafico(dados){
     const canva = document.querySelector('#graficoCampus');
 
+    const campi = {}
+
+    for(const dado of dados){
+        if(campi[dado.campus]){
+            campi[dado.campus]++
+        }
+        else{
+            campi[dado.campus] = 1
+        }
+    }
+    console.log(campi)
+
     const data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: Object.keys(campi),
         datasets: [{
-            label: 'My First Dataset',
-            data: [300, 50, 100, 40, 120, 24],
+            label: 'Atendimentos',
+            data: Object.values(campi),
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
