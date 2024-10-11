@@ -8,6 +8,8 @@ const worksController = new WorksController();
 worksRoute.post("/",checkAuth , worksController.registerWork);
 worksRoute.get("/:campus_id/:date", checkAuth, worksController.getWorksInCampusByDate);
 worksRoute.get("/:id", checkAuth, worksController.getWorkById);
-worksRoute.put("/:id", checkAuth, worksController.updateWorkStatus);
+worksRoute.put("/:id/status", checkAuth, worksController.updateWorkStatus);
+worksRoute.put("/:id", checkAuth, worksController.updateWork);
+
 
 export default worksRoute;

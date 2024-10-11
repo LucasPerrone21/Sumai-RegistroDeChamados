@@ -166,7 +166,7 @@ export default async function antendidmentosPendentes() {
 
             async function aprovarAtendimento(){
                 const id = modalAprovar.dataset.id;
-                const url = apiURL + `/works/${id}`;
+                const url = apiURL + `/works/${id}/status`;
                 const options = {
                     method: 'PUT',
                     headers: {

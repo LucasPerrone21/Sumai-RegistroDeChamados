@@ -35,12 +35,36 @@ export default function enviarChamado() {
         }
 
 
-        enviarChamadoAPI(chamado);
+        abrirModal()
+
+        function abrirModal(){
+            const modal = document.querySelector('.modalContainer[data-tipo="prosseguir"]');
+            modal.classList.add('ativo');
+            const botaoSim = modal.querySelector('.btnConfirmar');
+            const botaoNao = modal.querySelector('.btnRevisao');
+            botaoSim.addEventListener('click', enviarChamado)
+            botaoNao.addEventListener('click', fecharModal)
+
+            function fecharModal(){
+                modal.classList.remove('ativo');
+                botaoNao.removeEventListener('click', fecharModal)
+                botaoSim.removeEventListener('click', enviarChamado)
+            }
+
+            async function enviarChamado(){
+                fecharModal()
+                enviarChamadoAPI(chamado)
+            }
+
+        }
+
 
         async function enviarChamadoAPI(chamado){
-            const url = `${apiURL}/works`;
+            const urlParams = new URLSearchParams(window.location.search);
+            const idAtendimento = urlParams.get('id');
+            const url = `${apiURL}/works/${idAtendimento}`;
             const options = {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -52,7 +76,7 @@ export default function enviarChamado() {
                 const response = await fetch(url, options)
                 if(response.status === 201){
                     alert('Chamado cadastrado com sucesso!')
-                    window.location.reload()
+                    window.location.href = '/home.html'
                 }
 
             }

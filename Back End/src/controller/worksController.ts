@@ -225,6 +225,7 @@ export class WorksController {
                             worker: {
                                 select: {
                                     name: true,
+                                    id: true,
                                     function: {
                                         select: {
                                             name: true
@@ -253,7 +254,8 @@ export class WorksController {
                 status: work.status,
                 workers: work.WorksWorkers.map((worker) => ({
                     name: worker.worker.name,
-                    function: worker.worker.function.name
+                    function: worker.worker.function.name,
+                    id: worker.worker.id
                 }))
             }
 
@@ -294,6 +296,54 @@ export class WorksController {
             return res.status(200).json(updatedWork);
         }catch(error){
             return res.status(500).json({ message: 'Erro ao atualizar chamado' });
+        }
+    }
+
+    async updateWork(req: Request, res: Response) {
+        const id = parseInt(req.params.id);
+        const {place, workers} = req.body;
+        const company = await getCompanyByUser(req);
+
+        if(!place || !workers){
+            return res.status(400).json({ message: 'Preencha todos os campos' });
+        }
+
+        try {
+            const user = await getUserByToken(req); 
+            const user_id = user?.id;
+
+            if(!user_id){
+                return res.status(401).json({ message: 'Usuário não autorizado' });
+            }
+            const updatedWork = await db.works.update({
+                where: {
+                    id
+                },
+                data:{
+                    place,
+                    WorksWorkers:{
+                        deleteMany: {
+                        }
+                    }
+                }
+            });
+
+            await db.works.update({
+                where: {
+                    id
+                },
+                data: {
+                    WorksWorkers:{
+                        createMany:{
+                            data: workers.map((worker: any) => ({ id_worker: worker }))
+                        }
+                    }
+                }
+            });
+
+            res.status(201).json(updatedWork);
+        } catch (error) {
+            console.log(error);
         }
     }
 

@@ -52,7 +52,7 @@
 
 .form-group select, .form-container input{
     padding: 0.5rem;
-    border: 1px solid var(--cinza-fundo);
+    border: 1px solid var(--cinza-principal);
     border-radius: 10px;
     font-size: 1rem;
     font-family: 'Roboto', sans-serif;
@@ -74,8 +74,7 @@
     display: none;
     position: absolute;
     background-color: var(--branco-fundo);
-    border: 1px solid var(--cinza-fundo);
-    border-radius: 10px;
+    border: 1px solid var(--cinza-principal);
     z-index: 1;
     width: 100%;
     max-height: 150px;
@@ -87,7 +86,7 @@
 }
 
 .containerBusca ul::-webkit-scrollbar-thumb {
-    background-color: var(--azul-principal);
+    background-color: var(--laranja-primario);
     border-radius: 20px;
 }
 
@@ -99,25 +98,14 @@
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid var(--cinza-fundo);
+    border-bottom: 1px solid var(--cinza-principal);
     
-}
-
-.containerBusca ul li:first-child:hover{
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-
-.containerBusca ul li:last-child:hover{
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 
 
 .containerBusca ul li:hover{
-    background-color: var(--azul-logo-sumai);
+    background-color: var(--laranja-secundario);
     color: white;
 }
 
@@ -138,7 +126,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background-color: var(--cinza-fundo);
+    background-color: var(--cinza-secundario);
     margin-bottom: 1rem;
     border-radius: 10px;
 }
@@ -177,7 +165,7 @@
 
 .containerBotoes a{
     padding: 1rem;
-    background-color: var(--vermelho-negacao);
+    background-color: var(--vermelho-primario);
     color: white;
     border-radius: 10px;
     text-decoration: none;
@@ -196,7 +184,7 @@
 .containerBotoes button{
     font-size: 1rem;
     padding: 1rem;
-    background-color: var(--verde-logo-sumai);
+    background-color: var(--verde-primario);
     color: white;
     border-radius: 10px;
     border: none;
@@ -205,7 +193,7 @@
 }
 
 .containerBotoes button:hover{
-    background-color: #4a9e0f;
+    background-color: var(verde-secundario);
     scale: 1.01;
 }
 
@@ -271,53 +259,53 @@
 }
 
 .btnRevisao{
-    background-color: var(--azul-principal);
+    background-color: var(--azul-primario);
     cursor: pointer;
 }
 
 
 .btnRevisao:hover{
-    background-color: #0f2e4a;
+    background-color: var(--azul-secundario);
 }
 
 .btnConfirmar{
-    background-color: var(--verde-logo-sumai);
+    background-color: var(--verde-primario);
     cursor: pointer;
 
 }
 
 .btnConfirmar:hover{
-    background-color: #4a9e0f;
+    background-color: var(--verde-secundario);
 }
 
 .btnCancelar{
-    background-color: var(--vermelho-negacao);
+    background-color: var(--vermelho-primario);
 }
 
 .btnCancelar:hover{
-    background-color: #a00a0a;
+    background-color: var(--vermelho-secundario);
     cursor: pointer;
 
 }
 
 .btnExcluir{
-    background-color: var(--vermelho-negacao);
+    background-color: var(--vermelho-primario);
 }
 
 .btnExcluir:hover{
-    background-color: #a00a0a;
+    background-color: var(--vermelho-secundario);
     cursor: pointer;
 
 }
 
 .btnEnviado{
-    background-color: var(--azul-principal);
+    background-color: var(--azul-primario);
     cursor: pointer;
 
 }
 
 .btnEnviado:hover{
-    background-color: #0f2e4a;
+    background-color: var(--azul-secundario);
 }
 
 @media screen and (max-width: 1400px){
