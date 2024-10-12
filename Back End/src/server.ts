@@ -1,4 +1,5 @@
 import  Express  from "express";
+import { engine} from "express-handlebars";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRoute from "./routes/userRoutes";
@@ -10,6 +11,8 @@ import worksRoute from "./routes/worksRoutes";
 import { env } from "./enviroment/env";
 
 
+
+
 const app = Express();
 app.use(cors({
   origin: env?.APP_FRONTEND_URL,
@@ -18,6 +21,13 @@ app.use(cors({
 app.use(cookieParser());
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
+
+app.engine('handlebars', engine())
+app.set('views', `${__dirname}/views`);
+app.set('view engine', 'handlebars');
+app.use(Express.static(`${__dirname}/public`));
+
+
 
 
 
@@ -28,8 +38,16 @@ app.use("/campus", campusRoutes);
 app.use("/workers", workersRoute);
 app.use("/works", worksRoute);
 
+
+
+app.get("/home", (req, res) => {
+  res.render('home', {layout: false});
+})
+app.get("/editarAtendimento", (req, res) => {
+  res.render('editarAtendimento', {layout: false});
+})
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.render('login', {layout: false});
 })
 
 

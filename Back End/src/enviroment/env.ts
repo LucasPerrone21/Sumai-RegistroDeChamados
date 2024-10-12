@@ -1,4 +1,9 @@
 import { z } from 'zod';
+import dotenv from 'dotenv';
+
+
+dotenv.config(); // Isso carrega as variáveis do arquivo .env para o process.env
+
 
 // Defina o esquema para suas variáveis de ambiente
 const envSchema = z.object({
@@ -12,7 +17,6 @@ const envSchema = z.object({
 });
 
 const envTest = envSchema.safeParse(process.env)
-
 export const env = envTest.data;
 
 

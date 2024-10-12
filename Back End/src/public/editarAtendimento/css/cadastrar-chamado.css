@@ -1,0 +1,348 @@
+.main-container{
+    height: 100vh;
+    background-image: url(../../globals/imagens/estampa_sumai.png);
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-section{
+    background-color: var(--branco-fundo);
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    margin: 0 10rem;
+    width: 100%;
+}
+
+.main-section h1{
+    font-weight: normal;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.form-group-container{
+    display: flex;
+    margin-bottom: 1rem;
+    width: 100%;
+    gap: 1rem;
+
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-container label{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-group select, .form-container input{
+    padding: 0.5rem;
+    border: 1px solid var(--cinza-principal);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+}
+.containerBusca{
+    position: relative;
+    width: 100%;
+}
+
+.containerBusca input{
+    width: 100%;
+}
+
+.containerBusca ul.ativo{
+    display: block;
+}
+
+.containerBusca ul{
+    display: none;
+    position: absolute;
+    background-color: var(--branco-fundo);
+    border: 1px solid var(--cinza-principal);
+    z-index: 1;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.containerBusca ul::-webkit-scrollbar {
+    width: 10px;
+}
+
+.containerBusca ul::-webkit-scrollbar-thumb {
+    background-color: var(--laranja-primario);
+    border-radius: 20px;
+}
+
+
+.containerBusca ul li{
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--cinza-principal);
+    
+}
+
+
+
+.containerBusca ul li:hover{
+    background-color: var(--laranja-secundario);
+    color: white;
+}
+
+
+.funcionarios-container{
+    margin: 1rem 0 ;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+
+.funcionarios-container div:last-child  {
+    margin-bottom: 0rem;
+}
+
+.funcionario-info-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--cinza-secundario);
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+.funcionario-info-container img{
+    cursor: pointer;
+
+}
+
+.funcionario-info{
+    display: flex;
+    gap: .5rem;
+    flex-direction: column;
+}
+
+.funcionario-info p:last-child{
+    font-size: 0.8rem;
+}
+
+.funcionarios-container::-webkit-scrollbar {
+    width: 5px;
+
+}
+
+.funcionarios-container::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: var(--azul-principal);
+    border-radius: 10px;
+}
+
+.containerBotoes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerBotoes a{
+    padding: 1rem;
+    background-color: var(--vermelho-primario);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-size: 1rem;
+    transition: 200ms;
+
+}
+
+.containerBotoes a:hover{
+    background-color: #a00a0a;
+    scale: 1.01;
+
+}
+
+.containerBotoes button{
+    font-size: 1rem;
+    padding: 1rem;
+    background-color: var(--verde-primario);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: 200ms;
+}
+
+.containerBotoes button:hover{
+    background-color: var(verde-secundario);
+    scale: 1.01;
+}
+
+.modalContainer{
+    display: none;
+}
+
+.modalContainer.ativo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1;
+    backdrop-filter: blur(5px);
+}
+
+.modal{
+    background-color: var(--branco-fundo);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    width: 400px;
+}
+
+.modal h3{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.modal p{
+    font-size: 1rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.negrito{
+    font-weight: bold;
+}
+
+.modal div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.modal button{
+    padding: 1rem;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: 200ms;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.btnRevisao{
+    background-color: var(--azul-primario);
+    cursor: pointer;
+}
+
+
+.btnRevisao:hover{
+    background-color: var(--azul-secundario);
+}
+
+.btnConfirmar{
+    background-color: var(--verde-primario);
+    cursor: pointer;
+
+}
+
+.btnConfirmar:hover{
+    background-color: var(--verde-secundario);
+}
+
+.btnCancelar{
+    background-color: var(--vermelho-primario);
+}
+
+.btnCancelar:hover{
+    background-color: var(--vermelho-secundario);
+    cursor: pointer;
+
+}
+
+.btnExcluir{
+    background-color: var(--vermelho-primario);
+}
+
+.btnExcluir:hover{
+    background-color: var(--vermelho-secundario);
+    cursor: pointer;
+
+}
+
+.btnEnviado{
+    background-color: var(--azul-primario);
+    cursor: pointer;
+
+}
+
+.btnEnviado:hover{
+    background-color: var(--azul-secundario);
+}
+
+@media screen and (max-width: 1400px){
+    .main-container{
+        margin-top: 68px;
+    }
+    
+    
+}
+
+@media screen and (max-width: 800px){
+    .main-container{
+        height:100%;
+        margin-top: 68px;
+        background: none;
+    }
+
+    .main-section{
+        padding: 2rem 5rem;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    
+    
+}
+
+@media screen and (max-width: 500px){
+    .main-container{
+        margin-top: 56px;
+    }
+    .main-section{
+        padding: 2rem 2rem;
+    }
+
+    .form-group-container{
+        flex-direction: column;
+    }
+    
+}
