@@ -43,7 +43,7 @@ export default async function atendimentosAprovados() {
             <p>${item.place} <span class="status" data-status="${item.status}"></span></p>
             <p class="unidade">${item.campus} - ${item.unit}</p>
         </div>
-        <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+        <img src="/globals/imagens/icones/visao-geral.svg" alt="">
         `
         li.dataset.id = item.id;
         return li
@@ -76,7 +76,7 @@ export default async function atendimentosAprovados() {
 
         function editarAtendimento(event){
             const id = event.target.closest('.modal-container').dataset.id;
-            const url = 'editarAtendimento.html?id=' + id;
+            const url = `/editarAtendimento/${id}`;
             window.location = url;
         }
     }

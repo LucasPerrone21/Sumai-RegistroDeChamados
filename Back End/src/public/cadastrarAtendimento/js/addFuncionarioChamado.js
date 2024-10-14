@@ -50,7 +50,7 @@ export default async function addFuncionarioChamado(id) {
                                 <p>${funcionario.name}</p>
                                 <p>${funcionario.function}</p>
                             </div>
-                            <img src="./globals/imagens/icones/lixo.svg" alt="">`
+                            <img src="/globals/imagens/icones/lixo.svg" alt="">`
             container.appendChild(div);
             const img = div.querySelector('img')
             img.addEventListener('click', deletarFuncionario)

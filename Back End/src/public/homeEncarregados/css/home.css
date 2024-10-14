@@ -1,6 +1,6 @@
 .main-container{
     height: 100vh;
-    background-image: url(../../globals/imagens/estampa_sumai.png);
+    background-image: url(../../globals/imagens/estampa_sumai-azul.jpeg);
     background-size: cover;
     background-attachment: fixed;
     display: flex;
@@ -23,7 +23,7 @@
 }
 
 .main-section span{
-    color: var(--azul-logo-sumai);
+    color: var(--azul-secundario);
     font-weight: bold;
     font-size: 2rem;
 }
@@ -37,7 +37,8 @@
 }
 
 .opcao{
-    background-color: var(--azul-principal);
+    text-decoration: none;
+    background-color: var(--azul-primario);
     color: white;
     border-radius: 10px;
     text-align: center;
@@ -47,7 +48,7 @@
 }
 
 .opcao:hover{
-    background-color: var(--azul-logo-sumai);
+    background-color: var(--azul-secundario);
 }
 
 .opcao img{

@@ -1,3 +1,10 @@
 @import url(./home.css);
 @import url(../../globals/css/loading.css);
 @import url(./modais.css);
+
+@import url(../../globals/css/reset.css);
+@import url(../../globals/css/fonts.css);
+@import url(../../globals/css/colors.css);
+@import url(../../globals/css/navbarAdmin.css);
+@import url(../../globals/css/footerAdmin.css);
+@import url(../../globals/css/loading.css);

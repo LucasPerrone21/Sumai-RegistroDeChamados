@@ -60,8 +60,7 @@ export default function enviarChamado() {
 
 
         async function enviarChamadoAPI(chamado){
-            const urlParams = new URLSearchParams(window.location.search);
-            const idAtendimento = urlParams.get('id');
+            const idAtendimento = window.location.pathname.split('/').pop();
             const url = `${apiURL}/works/${idAtendimento}`;
             const options = {
                 method: 'PUT',
@@ -76,7 +75,7 @@ export default function enviarChamado() {
                 const response = await fetch(url, options)
                 if(response.status === 201){
                     alert('Chamado cadastrado com sucesso!')
-                    window.location.href = '/home.html'
+                    window.location.href = '/home'
                 }
 
             }

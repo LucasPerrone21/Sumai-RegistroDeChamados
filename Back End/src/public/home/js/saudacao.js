@@ -14,6 +14,7 @@ export default async function saudacao() {
     const user = await(await fetch(url, options)).json();
 
     const userName = user.name.split(" ")[0];
+    console.log(userName);
 
     saudacao.textContent = userName;
 

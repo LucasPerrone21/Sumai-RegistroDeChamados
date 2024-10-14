@@ -49,7 +49,7 @@ export default async function antendidmentosPendentes() {
             <p>${item.place} <span class="status" data-status="${item.status}"></span></p>
             <p class="unidade">${item.campus} - ${item.unit}</p>
         </div>
-        <img src="./globals/imagens/icones/visao-geral.svg" alt="">
+        <img src="/globals/imagens/icones/visao-geral.svg" alt="">
         `
         li.dataset.id = item.id;
         return li

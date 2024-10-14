@@ -21,6 +21,7 @@ export default function pegarChamados(){
 
         try{
             const data = await (await fetch(url, options)).json()
+            console.log(data)
             mostrarChamados(data)
         }
         catch(error){

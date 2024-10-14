@@ -2,8 +2,8 @@ import apiURL from "../../globals/js/apiURL.js";
 import deletarFuncionario from "./deletarFuncionario.js";
 
 export default async function getInfo(){
-    const urlParams = new URLSearchParams(window.location.search);
-    const idAtendimento = urlParams.get('id');
+    const idAtendimento = window.location.pathname.split('/').pop();
+    console.log(idAtendimento);
     
     const url = `${apiURL}/works/${idAtendimento}`;
 

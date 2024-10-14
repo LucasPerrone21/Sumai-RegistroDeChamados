@@ -3,52 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./globals/css/style.css">
-    <link rel="stylesheet" href="./editarAtendimento/css/style.css">
+    <link rel="stylesheet" href="/cadastrarAtendimento/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
-    <title>SIGMP - Editar Atendimento</title>
+    <title>SIGMP - Adicionar Atendimento</title>
 
-    <script type="module" src="./editarAtendimento/js/add-chamado.js"></script>
+    <script type="module" src="/cadastrarAtendimento/js/add-chamado.js"></script>
 
 </head>
 <body>
     <header class="cabecalho-container">
-        <img class="logo" src="./globals/imagens/logo_sumai.png" alt="">
+        <img class="logo" src="/globals/imagens/logo_sumai.png" alt="">
         <nav class="nav-container">
-            <a href="./home.html" class="cabecalho-link">
-                <img src="./globals/imagens/icones/home.png" alt="">
-                <p>Início</p>
+            <a href="/verAtendimentos" class="cabecalho-link">
+                <img src="/globals/imagens/icones/calendario.svg" alt="">
+                <p>Ver Chamados</p>
+            </a>
+            <a href="/cadastrarAtendimento" class="cabecalho-link">
+                <img src="/globals/imagens/icones/calendario-add.svg" alt="">
+                <p>Cadastrar Chamados</p>
             </a>
             <a href="#" class="cabecalho-link logout">
-                <img src="./globals/imagens/icones/sair.svg" alt="">
+                <img src="/globals/imagens/icones/sair.svg" alt="">
                 <p>Sair do Sistema</p>
             </a>
         </nav>
         <button class="burguerMenu">
-            <img src="./globals/imagens/icones/menu.svg" alt="">
+            <img src="/globals/imagens/icones/menu.svg" alt="">
         </button>
     </header>
     <div class="burguerMenu-info">
-        <a href="./home.html" class="cabecalho-link burguerMenu-itens">
-            <img src="./globals/imagens/icones/home.png" alt="">
-            <p>Início</p>
+        <a href="/verAtendimentos" class="cabecalho-link burguerMenu-itens">
+            <img src="/globals/imagens/icones/calendario.svg" alt="">
+            <p>Ver Chamados</p>
+        </a>
+        <a href="/cadastrarAtendimento" class="cabecalho-link burguerMenu-itens">
+            <img src="/globals/imagens/icones/calendario-add.svg" alt="">
+            <p>Cadastrar Chamados</p>
         </a>
         <a href="#" class="cabecalho-link burguerMenu-itens logout">
-            <img src="./globals/imagens/icones/sair.svg" alt="">
+            <img src="/globals/imagens/icones/sair.svg" alt="">
             <p>Sair do Sistema</p>
         </a>
     </div>
     <main class="main-container">
         <section class="main-section">
-            <h1>Editar Atendimento</h1>
+            <h1>Adicionar Atendimento</h1>
             <form action="" class="form-container">
                 <div class="form-group-container">
                     <div class="form-group">
                         <label for="campus">Campus:</label>
-                        <select name="campus" id="campus" disabled="true">
+                        <select name="campus" id="campus">
                             <option value="campus1">Ondina</option>
                             <option value="campus2">Canela</option>
                             <option value="campus3">Federação</option>
@@ -70,12 +77,12 @@
                     </div>
                     <div class="form-group">
                         <label for="local">Local:</label>
-                        <input type="text" id="local" placeholder="Ex: Sala 207">
+                        <input type="text" id="local" placeholder="Ex: Sala 207" autocomplete="off">
                     </div>
                 </div>
                 <label for="busca">Buscar Funcionários:</label>
                 <div class="containerBusca">
-                    <input type="search" id="busca">
+                    <input type="search" id="busca" autocomplete="off" placeholder="Ex: Lucas Perrone">
                     <ul>
                     </ul>
                 </div>
@@ -83,8 +90,8 @@
                     
                 </div>
                 <div class="containerBotoes">
-                    <a href="./home.html">Cancelar</a>
-                    <button type="submit">Editar</button>
+                    <a href="/home">Cancelar</a>
+                    <button type="submit">Cadastrar</button>
                 </div>
             </form>
             
@@ -94,11 +101,11 @@
         <p>Desenvolvido por <a href="https://lucasperrone21.github.io/Portfolio/">Lucas Perrone</a> | © 2024 Todos os direitos reservados.</p>
         <div class="rodape-social-container">
             <a href="https://br.linkedin.com/in/lucasperrone21" class="rodape-social">
-                <img src="./globals/imagens/icones/linkedin.svg" alt="">
+                <img src="/globals/imagens/icones/linkedin.svg" alt="">
                 <p>LinkedIn</p>
             </a>
             <a href="https://github.com/LucasPerrone21" class="rodape-social">
-                <img src="./globals/imagens/icones/github.svg" alt="">
+                <img src="/globals/imagens/icones/github.svg" alt="">
                 <p>GitHub</p>
             </a>
         </div>
@@ -107,8 +114,8 @@
 
     <section class="modalContainer" data-tipo="prosseguir">
         <div class="modal">
-            <h3>Confirmar atendimento?</h3>
-            <p>Deseja realmente editar este Atendimento?</p>
+            <h3>Confirmar Chamado?</h3>
+            <p>Deseja realmente enviar este chamado para a revisão?</p>
             <div>
                 <button class="btnRevisao">Revisar</button>
                 <button class="btnConfirmar">Confirmar</button>
@@ -119,7 +126,7 @@
     <section class="modalContainer" data-tipo="deletar">
         <div class="modal">
             <h3>Excluir Funcionário?</h3>
-            <p>Deseja realmente excluir <span class="negrito">Robervaldo Fonseca da Cruz Ramos</span> deste atendimento?<p>
+            <p>Deseja realmente excluir <span class="negrito">Robervaldo Fonseca da Cruz Ramos</span> deste chamado?<p>
             <div>
                 <button class="btnRevisao">Voltar</button>
                 <button class="btnExcluir">Excluir</button>
@@ -127,10 +134,20 @@
         </div>
     </section>
 
+    <section class="modalContainer" data-tipo="chamadoEnviado">
+        <div class="modal">
+            <h3>Chamado Enviado!</h3>
+            <p>O chamado foi enviado, aguarde a sua central aprova-lo para poder iniciar o atendimento!<p>
+            <div>
+                <button class="btnEnviado">Ok</button>
+            </div>
+        </div>
+    </section>
+
     <section class="modalContainer" data-tipo="chamado-addFunc">
         <div class="modal">
             <h3>Adicionar Funcionário?</h3>
-            <p>Tem certeza que deseja adicionar <span id="funcName" class="negrito"></span> a este atendimento?<p>
+            <p>Tem certeza que deseja adicionar <span id="funcName" class="negrito"></span> a este chamado?<p>
             <div>
                 <div>
                     <button class="btnRevisao">Voltar</button>

@@ -1,5 +1,6 @@
 .login-container{
-    background-image: url('../../globals/imagens/estampa_sumai.png');
+    background-image: url('../../globals/imagens/estampa_sumai-roxo.jpg');
+    
     background-size: cover;
     display: flex;
     justify-content: center;

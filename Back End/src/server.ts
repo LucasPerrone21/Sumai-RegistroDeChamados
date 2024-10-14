@@ -8,6 +8,7 @@ import unitRoutes from "./routes/unitRoutes";
 import campusRoutes from "./routes/campusRoutes";
 import workersRoute from "./routes/workers";
 import worksRoute from "./routes/worksRoutes";
+import viewRoutes from "./routes/viewRoutes";
 import { env } from "./enviroment/env";
 
 
@@ -37,18 +38,7 @@ app.use("/unit", unitRoutes);
 app.use("/campus", campusRoutes);
 app.use("/workers", workersRoute);
 app.use("/works", worksRoute);
-
-
-
-app.get("/home", (req, res) => {
-  res.render('home', {layout: false});
-})
-app.get("/editarAtendimento", (req, res) => {
-  res.render('editarAtendimento', {layout: false});
-})
-app.get("/", (req, res) => {
-  res.render('login', {layout: false});
-})
+app.use("/", viewRoutes);
 
 
 app.listen(env?.APP_PORT, () => {
