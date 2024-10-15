@@ -119,18 +119,6 @@ export class WorksController {
                     }
                 });
             
-                const formattedWorks = works.map((work) => ({
-                    id: work.id,
-                    date: work.date,
-                    place: work.place,
-                    unit: work.unit.name,
-                    campus: work.unit.campus.name,
-                    status: work.status,
-                    workers: work.WorksWorkers.map((worker) => ({
-                        name: worker.worker.name,
-                        function: worker.worker.function.name
-                    }))
-                }));
             } else {       
                 works = await db.works.findMany({
                 where:{
@@ -175,7 +163,8 @@ export class WorksController {
                         }
                     }
                 }
-            });    }
+                });    
+            }
 
             const formattedWorks = works.map((work) => ({
                 id: work.id,
@@ -189,6 +178,8 @@ export class WorksController {
                     function: worker.worker.function.name
                 }))
             }));
+
+            console.log(formattedWorks);
 
 
             if(formattedWorks.length === 0){
