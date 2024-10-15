@@ -1,0 +1,173 @@
+.main-container{
+    background-image: url(../../globals/imagens/estampa_sumai-amarelo.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10rem 10rem;
+}
+
+.main-container-interno{
+    background-color: var(--branco-fundo);
+    min-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.5);
+}
+
+.main-container-interno h1{
+    font-size: 2rem;
+    text-align: start;
+    padding: 2rem;
+    font-weight: normal;
+}
+
+.main-container-interno h1 span{
+    color: var(--laranja-primario);
+    font-weight: bold;
+}
+
+.section{
+    padding: 0 2rem;
+}
+
+.section h2{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.container-atendimentos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.container-atendimentos ul{
+    max-height: 300px;
+    width: 70%;
+    padding-right: 3%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.container-atendimentos ul::-webkit-scrollbar{
+    width: 10px;
+}
+
+.container-atendimentos ul::-webkit-scrollbar-thumb{
+    background-color: var(--laranja-primario);
+    border-radius: 10px;
+}
+
+.container-atendimentos canvas{
+    width: 25% !important;
+    height: auto !important;
+}
+
+.atendimentos-lista li{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--branco-secundario);
+    margin-bottom: .5rem;
+    border-radius: 10px;
+}
+
+.atendimentos-lista li p{
+    display: flex;
+    align-items: center;
+}
+
+.status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10px;
+    height: 10px;
+    padding: 0rem;
+    border-radius: 20px;
+    margin-left: .5rem;
+    background-color: black;
+}
+
+.unidade{
+    font-size: .8rem;
+}
+
+.atendimento{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: .5rem;
+}
+
+[data-status="ACCEPTED"]{
+    background-color: var(--verde-secundario);
+}
+
+[data-status="REJECTED"]{
+    background-color: var(--vermelho-primario);
+}
+
+[data-status="PENDING"]{
+    background-color: var(--laranja-secundario);
+}
+
+.input-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.input-container div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.input-container div input{
+    width: 100%;
+    padding: .5rem;
+    border-radius: 10px;
+    border: 1px solid var(--cinza-principal);
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.input-container div select{
+    width: 100%;
+    padding: .5rem;
+    border-radius: 10px;
+    border: 1px solid var(--cinza-principal);
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.pendentes button{
+    width: 100%;
+    padding: .5rem;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    background-color: var(--laranja-secundario);
+    color: var(--branco-secundario);
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.atendimentos-lista{
+    list-style: none;
+    width: 100%;
+}
+
+.atendimentos-lista li img{
+    padding: .5rem;
+}
