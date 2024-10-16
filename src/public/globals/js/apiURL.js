@@ -1,2 +1,2 @@
-const apiURL = 'sumai.up.railway.app';
+const apiURL = 'https://sumai.up.railway.app';
 export default apiURL
