@@ -12,7 +12,7 @@ export class WorksController {
             return res.status(400).json({ message: 'Preencha todos os campos' });
         }
 
-
+        
 
         try {
             const user = await getUserByToken(req); 
@@ -22,8 +22,8 @@ export class WorksController {
                 return res.status(401).json({ message: 'Usuário não autorizado' });
             }
 
-            const dateWithTimestamp = new Date(date);
-            const dateWithoutTimestamp = dateWithTimestamp.toISOString()
+            const dateWithoutUTC = new Date(date);
+            const dateUTC = dateWithoutUTC.toISOString()
             const newWork = await db.works.create({
                 data:{
                     unit:{
@@ -35,7 +35,7 @@ export class WorksController {
                     company: {
                         connect: { id: company }
                     },
-                    date: dateWithoutTimestamp,
+                    date: dateUTC,
                     place,
                     WorksWorkers:{
                         createMany:{
@@ -64,6 +64,8 @@ export class WorksController {
             else{
                 formatedDate = new Date().toISOString();
             }
+
+            console.log(formatedDate);
 
             const startOfDay = new Date(formatedDate);
             startOfDay.setHours(0,0,0,1);

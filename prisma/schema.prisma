@@ -103,12 +103,12 @@ model Works{
   id_unit           Int
   id_company        Int
   place             String
-  date              DateTime
+  date              DateTime    @db.Date
   unit              Unit        @relation(fields: [id_unit], references: [id])
   company           Companies   @relation(fields: [id_company], references: [id])
   WorksWorkers      WorksWorkers[]
-  status            WorkStatus  @default(PENDING)
-  createdAt         DateTime    @default(now())
+  status            WorkStatus  @default(PENDING) 
+  createdAt         DateTime    @default(now()) 
   updatedAt         DateTime    @updatedAt
   createdBy         String
   user_id           User        @relation(fields: [createdBy], references: [id])
