@@ -27,10 +27,12 @@ export default class ViewsController{
             return res.redirect('/');
         }
 
-        if(permissions.some(p => p.role === 'SUPERADMIN' || p.role === 'TECHNICAL_ADMIN')){
+        if(permissions.some(p => p.role === 'TECHNICAL_ADMIN')){
             return res.render('homeAdmin', {layout: false});
         }else if(permissions.some(p => p.role === 'TECHNICAL_MANAGER')){
             return res.render('homeEncarregados', {layout: false});
+        }else if(permissions.some((p => p.role === 'SUPERADMIN' ))){
+            return res.render('homeSuperAdmin', {layout: false});
         }
     }
     async editarAtendimento(req: any, res: any){

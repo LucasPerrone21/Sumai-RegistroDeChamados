@@ -1,0 +1,10 @@
+.main-container{
+    height: 100vh;
+    background-image: url(../../globals/imagens/estampa_verdeMusgo.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
