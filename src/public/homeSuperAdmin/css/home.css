@@ -1,10 +1,147 @@
 .main-container{
-    height: 100vh;
+    min-height: 100vh;
     background-image: url(../../globals/imagens/estampa_verdeMusgo.jpg);
     background-size: cover;
     background-attachment: fixed;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 10rem;
+    gap: 4rem;
 }
 
+.main-container aside{
+    padding: 2rem;
+    background-color: var(--branco-fundo);
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.linksContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: fit-content;
+    gap: 1rem;
+}
+
+.linksContainer li{
+    background-color: var(--verde-musgo-primario);
+    color: var(--branco-fundo);
+    text-decoration: none;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.linksContainer a{
+    color: var(--branco-fundo);
+    text-decoration: none;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+
+}
+
+.linksContainer a:hover{
+    background-color: var(--verde-musgo-secundario);
+}
+
+.main-section{
+    display: none;
+}
+
+.main-section.ativo{
+    display: inline;
+    background-color: var(--branco-fundo);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.main-section h1{
+    color: var(--verde-musgo-primario);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.main-section label{
+    margin-bottom: 1rem;
+}
+
+.main-section input, .main-section select{
+    width: 100%;
+    padding: 1rem;
+    margin: .5rem 0;
+    border-radius: 20px;
+    border: 1px solid var(--cinza-principal);
+
+}
+
+.listaContainer{
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+}
+
+.listaContainer::-webkit-scrollbar{
+    width: 10px;
+}
+
+.listaContainer::-webkit-scrollbar-thumb{
+    background-color: var(--verde-musgo-primario);
+    border-radius: 10px;
+}
+
+.listaContainer li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--cinza-principal);
+    border-radius: 10px;
+}
+
+.listaContainer img{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.listaInfo p:nth-child(1){
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.listaInfo p:nth-child(2){
+    font-size: 0.75rem;
+}
+
+.btn-add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--verde-musgo-primario);
+    color: var(--branco-fundo);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.btn-add:hover{
+    background-color: var(--verde-musgo-secundario);
+}
+
+.btn-add img{
+    width: 24px;
+    height: 24px;
+}

@@ -1,15 +1,12 @@
 import burguerMenu from "../../globals/js/burguerMenu.js";
 import checkToken from "../../globals/js/checkToken.js";
 import logout from "../../globals/js/logout.js";
-import Loading from "../../globals/js/loading.js";
+import openUsuarios from "./openUsuarios.js";
 
-const load = new Loading();
-
-load.show()
 
 await checkToken();
 await logout();
-await burguerMenu();
+burguerMenu();
+await openUsuarios();
 
-load.hide()
 

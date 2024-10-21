@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import { z } from 'zod';
+import { set, z } from 'zod';
 import db from '../database/db';
 import bcrypt from 'bcrypt';
 import getUserByToken from '../midlewares/getUserByToken';
@@ -52,6 +52,41 @@ export default class UserController {
         }
 
         return res.status(200).json(formatedUser);
+    }
+
+    async getAllUsers(req: Request, res: Response) {
+        try{
+            const users = await db.user.findMany({select:{
+                id: true,
+                email: true,
+                name: true,
+            }});
+
+            return res.status(200).json(users);
+        }
+        catch(error:any){
+            return res.status(500).json({ message: 'Não foi possível listar os usuários', error: error });
+        }
+    }
+
+    async getUserById(req: Request, res: Response) {
+        const { id } = req.params as { id: string };
+        if (!id) {
+            return res.status(400).json({ message: 'Informe o id do usuário' });
+        }
+        try {
+            const user = await db.user.findUnique({where: {id}, select:{
+                id: true,
+                email: true,
+                name: true,
+            }});
+            if(!user){
+                return res.status(404).json({ message: 'Usuário não encontrado' });
+            }
+            return res.status(200).json(user);
+        } catch (error:any) {
+            return res.status(500).json({ message: 'Não foi possível buscar o usuário', error: error });
+        }
     }
 }
 
