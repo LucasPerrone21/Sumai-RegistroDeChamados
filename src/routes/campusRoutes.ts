@@ -9,5 +9,6 @@ const campusController = new CampusController();
 
 campusRoutes.post("/", checkAuth , checkRoles(["SUPERADMIN",]) , campusController.register);
 campusRoutes.get("/", checkAuth , campusController.list);
-
+campusRoutes.get("/:id", checkAuth , campusController.show);
+campusRoutes.put("/:id", checkAuth , checkRoles(["SUPERADMIN",]) , campusController.update);
 export default campusRoutes;

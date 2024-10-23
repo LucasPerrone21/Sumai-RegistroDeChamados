@@ -1,13 +1,13 @@
 import {Request, Response} from 'express';
-import { set, z } from 'zod';
+import { z } from 'zod';
 import db from '../database/db';
 import bcrypt from 'bcrypt';
 import getUserByToken from '../midlewares/getUserByToken';
 
 export default class UserController {
     async register(req: Request, res: Response) {
-        const { email, password, name } = req.body;
-        if (!email || !password || !name) {
+        const { email, password, name, role, company } = req.body;
+        if (!email || !password || !name || !role || !company) {
             return res.status(400).json({ message: 'Preencha todos os campos' });
         }
         const emailSchema = z.string().email();
@@ -27,11 +27,17 @@ export default class UserController {
         }
 
         const hashedPassword = await bcrypt.hash(password, 15);
+        const formatedCompany = parseInt(company);
 
         // Código para salvar usuário no banco de dados
         try {
-            const status = await db.user.create({data: {email, name ,password: hashedPassword}});
-            console.log(status);
+            const status = await db.user.create({data: {
+                email,
+                name,
+                password: hashedPassword,
+                role,
+                company: {connect: {id: formatedCompany}}
+            }});
             return res.status(201).json({ message: 'Usuário cadastrado com sucesso' });
         } catch (error:any) {
             return res.status(500).json({ message: 'Não foi possível cadastrar o usuário', error: error });
@@ -60,6 +66,8 @@ export default class UserController {
                 id: true,
                 email: true,
                 name: true,
+                company: true,
+                role: true,
             }});
 
             return res.status(200).json(users);
@@ -79,6 +87,8 @@ export default class UserController {
                 id: true,
                 email: true,
                 name: true,
+                company: true,
+                role: true,
             }});
             if(!user){
                 return res.status(404).json({ message: 'Usuário não encontrado' });

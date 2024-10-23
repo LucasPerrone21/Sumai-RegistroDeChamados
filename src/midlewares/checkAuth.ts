@@ -9,8 +9,9 @@ export default function checkAuth(req: Request, res: Response, next: Function) {
     }
     try {
         jwt.verify(token, env?.APP_SECRET as string);
-        next();
+        return next();
     }catch (error) {
         return res.status(401).json({ message: 'Acesso negado' });
     }
+    console.log('chegou aqui');
 }

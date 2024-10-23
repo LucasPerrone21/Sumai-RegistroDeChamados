@@ -22,20 +22,8 @@ model User {
   company           Companies?              @relation(fields: [company_id], references: [id])
   createdAt         DateTime                @default(now())
   updatedAt         DateTime                @updatedAt
-  access            Access[]
-  works             Works[]
-}
-
-model Access {
-  id        String      @id @default(cuid())
-  user_id   String
-  user      User     @relation(fields: [user_id], references: [id])
-  role      Role
-  company_id Int?
-  company   Companies? @relation(fields: [company_id], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  role              Role                    @default(TECHNICAL_MANAGER)
+  works             Works[]          
 }
 
 enum Role {
@@ -72,7 +60,6 @@ model Companies{
   workers           Workers[]
   WorkerFunction    WorkerFunction[]
   Works             Works[]
-  access            Access[]
   users             User[]
   
 }

@@ -1,47 +1,25 @@
 import apiURL from "../../globals/js/apiURL.js";
-import validateInputsUsuario from "./validarInputsUsuarios.js";
 
 
-const url = `${apiURL}/user/`;
-const usuariosPagina = document.querySelector("section[data-tipo=usuarios]");
-const itens = [];
+const url = `${apiURL}/campus/`;
+const campusPagina = document.querySelector("section[data-tipo=campus]");
 
-export default async function openUsuarios() {
-    let btnAdicionar = usuariosPagina.querySelector(".btn-add");
+
+export default async function openCampus() {
+    let btnAdicionar = campusPagina.querySelector(".btn-add");
 
     const newBtn = btnAdicionar.cloneNode(true);
     btnAdicionar.parentNode.replaceChild(newBtn, btnAdicionar);
 
-    btnAdicionar = usuariosPagina.querySelector(".btn-add");
+    btnAdicionar = campusPagina.querySelector(".btn-add");
 
 
     btnAdicionar.addEventListener("click", abrirModalCadastro);
 
-    await getUsuarios();
-    buscarUsuarios();
+    await getCampus();
     injetarModal();
 
-    
-    async function buscarUsuarios() {
-        const input = usuariosPagina.querySelector("input");
-        const buscaResultados = usuariosPagina.querySelector('.listaContainer');
-        
-        input.addEventListener("input", buscarPessoas)
-    
-        function buscarPessoas(event){
-            const valor = event.target.value.toUpperCase();
-            buscaResultados.innerHTML = ""
-            itens.forEach(item => {
-                const email = item.querySelector("[data-email]").textContent.toUpperCase();
-                if(email.includes(valor)){
-                    buscaResultados.appendChild(item)
-                }
-            })
-                
-        }
-    }
-
-    async function getUsuarios() {
+    async function getCampus() {
         try {
             const response = await fetch(url, {
                 method: "GET",
@@ -51,22 +29,20 @@ export default async function openUsuarios() {
                 credentials: "include",
             });
             const data = await response.json();
-            const listaUsuarios = usuariosPagina.querySelector(".listaContainer");
-            listaUsuarios.innerHTML = "";
-            data.forEach( usuario => {
-                const usuarioLi = document.createElement("li");
+            const listaCampus = campusPagina.querySelector(".listaContainer");
+            listaCampus.innerHTML = "";
+            data.forEach( campus => {
+                const campusLi = document.createElement("li");
                 const template = `
                 <div class="listaInfo">
-                    <p>${usuario.name}</p>
-                    <p data-email>${usuario.email}</p>
+                    <p>${campus.name}</p>
+                    <p data-endereco>${campus.address}</p>
                 </div>
-                <img src="/globals/imagens/icones/editar-usuario.png" alt="">
+                <img src="/globals/imagens/icones/mapa.png" alt="">
                 `
-            usuarioLi.innerHTML = template;
-            usuarioLi.dataset.id = usuario.id;
-            listaUsuarios.appendChild(usuarioLi);
-
-            itens.push(usuarioLi);
+            campusLi.innerHTML = template;
+            campusLi.dataset.id = campus.id;
+            listaCampus.appendChild(campusLi);
             });
         } catch (error) {
             console.error("Error:", error);
@@ -74,14 +50,14 @@ export default async function openUsuarios() {
     }
 
     async function injetarModal() {
-        const usuariosClick = usuariosPagina.querySelectorAll(".listaContainer img");
-        usuariosClick.forEach( usuario => {
-            usuario.addEventListener("click", pegarDadosParaModal);
+        const campusClick = campusPagina.querySelectorAll(".listaContainer img");
+        campusClick.forEach( campus => {
+            campus.addEventListener("click", pegarDadosParaModal);
         })
 
         async function pegarDadosParaModal(event){
             const id = event.target.closest("li").dataset.id;
-            const options ={
+            const options = {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -90,8 +66,8 @@ export default async function openUsuarios() {
             }
 
             try{
-                const usuario = await (await fetch(`${url}${id}`, options)).json();
-                abrirModalEditar(usuario)
+                const campus = await (await fetch(`${url}${id}`, options)).json();
+                abrirModalEditar(campus)
             }
             catch(error){
                 console.error("Error:", error)
@@ -99,24 +75,13 @@ export default async function openUsuarios() {
         }
     }
 
-    async function abrirModalEditar(usuario){
-        const modal = document.querySelector("[data-modal='editarUsuario']");
+    async function abrirModalEditar(campus){
+        const modal = document.querySelector("[data-modal='editarCampus']");
         const nome = modal.querySelector("input[name='name']");
-        const email = modal.querySelector("input[name='email']");
-        const empresa = modal.querySelector("select[name='empresa']");
-        const permissao = modal.querySelectorAll("input[name='permissao']");
+        const endereco = modal.querySelector("textarea[name='address']");
 
-
-        nome.value = usuario.name;
-        email.value = usuario.email;
-        empresa.value = usuario.company.id;
-        
-        
-        permissao.forEach( permissao => {
-            if(permissao.value === usuario.role){
-                permissao.checked = true;
-            }
-        })
+        nome.value = campus.name;
+        endereco.value = campus.address;
 
         modal.classList.add("ativo");
 
@@ -142,21 +107,20 @@ export default async function openUsuarios() {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
+                // CRIAR UM VALIDADOR DE CAMPOS -----------------------------------------------------------------
                 body: JSON.stringify({
                     name: nome.value,
-                    email: email.value,
-                    company: empresa.value,
-                    role: permissao.value,
+                    address: endereco.value,
                 }),
             }
             try{
-                const response = await fetch(`${url}${usuario.id}`, options);
+                const response = await fetch(`${url}${campus.id}`, options);
                 if(response.ok){
-                    alert("Usuário editado com sucesso");
+                    alert("Campus editado com sucesso");
                     window.location.reload()
                 }
                 else{
-                    alert("Erro ao editar usuário");
+                    alert("Erro ao editar o Campus");
 
                 }
             }
@@ -165,6 +129,13 @@ export default async function openUsuarios() {
             }
         }
     }
+
+
+
+
+// COMEÇAR AQUI -----------------------------------------------------------------------------------------------
+
+
 
     async function abrirModalCadastro() {
         const modal = document.querySelector("[data-modal='cadastrarUsuario']");

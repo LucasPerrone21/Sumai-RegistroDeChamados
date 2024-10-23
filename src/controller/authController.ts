@@ -33,14 +33,7 @@ export default class AuthController{
         // Checar permissão do usuário
 
         try{
-            const permissions = await db.access.findMany({
-                where:{
-                    user_id: user.id
-                }
-            });
-
-            const userPermissions = permissions.map((item) => item.id);
-            const token = jwt.sign({email: user.email, company: user.company_id , permissions: userPermissions}, env?.APP_SECRET as string, {expiresIn: '8h'});
+            const token = jwt.sign({email: user.email, company: user.company_id , permission: user.role}, env?.APP_SECRET as string, {expiresIn: '8h'});
 
             res.cookie('token', token, {
                 httpOnly: true,

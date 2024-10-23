@@ -1,0 +1,115 @@
+[data-modal]{
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+
+}
+
+[data-modal].ativo{
+    display: flex;
+}
+
+.containerModal{
+    position: fixed;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: 50%;
+}
+
+.containerModal h2{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.containerModal h3{
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.inputDuplo{
+    display: flex;
+    justify-content: space-between;
+    gap: 0.625rem;
+}
+
+.inputUnico{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.inputUnico label{
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.inputUnico input, .inputUnico select, .inputUnico textarea{
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--cinza-principal);
+    font-size: 1rem;
+    resize: none;
+}
+
+.inputRadio{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.inputRadio label{
+    font-size: 1rem;
+}
+
+.inputRadio .tituloPermissao{
+    font-size: 1.2rem;
+}
+
+.inputRadio .desc{
+    font-size: 0.8rem;
+}
+
+.containerBotoes{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.btn-modal{
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-modal:hover{
+    filter: brightness(0.9);
+}
+
+.confirmar{
+    background-color: var(--verde-musgo-secundario);
+    color: #fff;
+}
+
+.fechar{
+    background-color: var(--vermelho-primario);
+    color: #fff;
+}
