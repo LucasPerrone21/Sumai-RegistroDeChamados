@@ -113,3 +113,9 @@
     background-color: var(--vermelho-primario);
     color: #fff;
 }
+
+[data-modal] iframe{
+    width: 100%;
+    height: 300px;
+    margin-bottom: 1rem;
+}

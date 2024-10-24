@@ -96,7 +96,8 @@
                     <option value="0">Todos</option>
                     <option value="1">Ondina</option>
                     <option value="2">Canela</option>
-                    <option value="3">Vale do Canela</option>
+                    <option value="3">Federação</option>
+                    <option value="4">Unidades Dispersas</option>
                 </select>
             <ul class="listaContainer">
                 <li>
@@ -504,6 +505,58 @@
                 <label for="text">Endereco:</label>
                 <textarea name="address"></textarea>
             </div>
+            <div class="containerBotoes">
+                <button class="btn-modal fechar">Fechar</button>
+                <button class="btn-modal confirmar">Salvar</button>       
+            </div>
+        </form>
+    </section>
+
+    <section data-modal="cadastrarCampus" class="">
+        <form class="containerModal formCadastro">
+            <h2>Editar Campus</h2>
+            <div class="inputUnico">
+                <label for="name">Nome:</label>
+                <input type="text" name="name">
+            </div>
+            <div class="inputUnico">
+                <label for="text">Endereco:</label>
+                <textarea name="address"></textarea>
+            </div>
+            <div class="containerBotoes">
+                <button class="btn-modal fechar">Fechar</button>
+                <button class="btn-modal confirmar">Salvar</button>       
+            </div>
+        </form>
+    </section>
+
+    <section data-modal="editarUnidade" class="">
+        <form class="containerModal formCadastro">
+            <h2>Editar Unidade</h2>
+            <div class="inputDuplo">
+                <div class="inputUnico">
+                    <label for="name">Nome:</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="inputUnico">
+                    <label for="codSipac">Cod. SIPAC:</label>
+                    <input type="number" name="codSipac">
+                </div>
+            </div>
+            
+            <div class="inputDuplo">
+                <div class="inputUnico">
+                    <label for="latitude">Latitude:</label>
+                    <input type="number" name="latitude">
+                </div>
+                <div class="inputUnico">
+                    <label for="longitude">Longitude:</label>
+                    <input type="number" name="longitude">
+                </div>
+            </div>
+
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1175.3286692004099!2d-38.50765498548899!3d-13.00159895639684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1spt-BR!2sbr!4v1729790825816!5m2!1spt-BR!2sbr" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
             <div class="containerBotoes">
                 <button class="btn-modal fechar">Fechar</button>
                 <button class="btn-modal confirmar">Salvar</button>       

@@ -21,6 +21,13 @@ export default async function getCampus() {
         })
 
         campusSelect.innerHTML = "";
+
+        const option = document.createElement("option");
+        option.value = "0";
+        option.textContent = "Todos";
+        campusSelect.appendChild(option);
+
+        
         campusAPI.forEach(campus => {
             const option = document.createElement("option");
             option.value = campus.id;

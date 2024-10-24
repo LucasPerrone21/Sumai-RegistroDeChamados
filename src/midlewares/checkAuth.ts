@@ -13,5 +13,4 @@ export default function checkAuth(req: Request, res: Response, next: Function) {
     }catch (error) {
         return res.status(401).json({ message: 'Acesso negado' });
     }
-    console.log('chegou aqui');
 }

@@ -1,6 +1,7 @@
 import Loading from "../../globals/js/loading.js";
 import openUsuarios from "./openUsuarios.js";
 import openCampus from "./openCampus.js";
+import openUnidades from "./openUnidades.js";
 
 
 export default async function mudarAbas(){
@@ -9,7 +10,7 @@ export default async function mudarAbas(){
     
     const sections = document.querySelectorAll('[data-tipo]');
     const seletores = document.querySelectorAll('.seletor');
-    const burguerMenu = document.querySelector('.burguerMenu-info');
+    const burguerMenuItens = document.querySelector('.burguerMenu-info');
 
 
     seletores.forEach( seletor => {
@@ -39,9 +40,14 @@ export default async function mudarAbas(){
         else if(tipo === 'campus'){
             await openCampus();
         }
+        else if(tipo === 'unidades'){
+            await openUnidades();
+        }
 
-        if (burguerMenu.classList.contains('ativo')){
-            burguerMenu.classList.remove('ativo')
+        if (burguerMenuItens.classList.contains('ativo')){
+            const burguerMenu = document.querySelector('.burguerMenu');
+            burguerMenu.click();
+
         }
         load.hide()
     }

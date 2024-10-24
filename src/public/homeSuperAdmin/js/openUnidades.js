@@ -1,27 +1,34 @@
 import apiURL from "../../globals/js/apiURL.js";
-import validateInputsCampus from "./validarInputsCampus.js";
+import validateInputsUnidade from "./validarInputsUnidade.js";
 
-const url = `${apiURL}/campus/`;
-const campusPagina = document.querySelector("section[data-tipo=campus]");
+const url = `${apiURL}/unit/`;
+const unidadesPagina = document.querySelector("section[data-tipo=unidades]");
 
 
-export default async function openCampus() {
-    let btnAdicionar = campusPagina.querySelector(".btn-add");
+export default async function openUnidades() {
+    let btnAdicionar = unidadesPagina.querySelector(".btn-add");
 
     const newBtn = btnAdicionar.cloneNode(true);
     btnAdicionar.parentNode.replaceChild(newBtn, btnAdicionar);
-
-    btnAdicionar = campusPagina.querySelector(".btn-add");
-
-
+    btnAdicionar = unidadesPagina.querySelector(".btn-add");
     btnAdicionar.addEventListener("click", abrirModalCadastro);
 
-    await getCampus();
+    let select = unidadesPagina.querySelector("select");
+
+    const newSelect = select.cloneNode(true);
+    select.parentNode.replaceChild(newSelect, select);
+    select = unidadesPagina.querySelector("select");
+
+    select.addEventListener("change", filter);
+
+
+
+    await getUnidades();
     injetarModal();
 
-    async function getCampus() {
+    async function getUnidades() {
         try {
-            const response = await fetch(url, {
+            const response = await fetch(url + "campus/0/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -29,30 +36,63 @@ export default async function openCampus() {
                 credentials: "include",
             });
             const data = await response.json();
-            const listaCampus = campusPagina.querySelector(".listaContainer");
-            listaCampus.innerHTML = "";
-            data.forEach( campus => {
-                const campusLi = document.createElement("li");
+            const listaUnidades = unidadesPagina.querySelector(".listaContainer");
+            listaUnidades.innerHTML = "";
+            data.forEach( unidade => {
+                const unidadeLi = document.createElement("li");
                 const template = `
                 <div class="listaInfo">
-                    <p>${campus.name}</p>
-                    <p data-endereco>${campus.address}</p>
+                    <p>${unidade.name}</p>
+                    <p data-codSipac>Código SIPAC: ${unidade.cod_sipac}</p>
                 </div>
                 <img src="/globals/imagens/icones/mapa.png" alt="">
                 `
-            campusLi.innerHTML = template;
-            campusLi.dataset.id = campus.id;
-            listaCampus.appendChild(campusLi);
+            unidadeLi.innerHTML = template;
+            unidadeLi.dataset.id = unidade.id;
+            listaUnidades.appendChild(unidadeLi);
             });
         } catch (error) {
             console.error("Error:", error);
         }
     }
 
+    async function filter() {
+        const value = select.value;
+        try {
+            const response = await fetch(url + `campus/${value}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+            const data = await response.json();
+            const listaUnidades = unidadesPagina.querySelector(".listaContainer");
+            listaUnidades.innerHTML = "";
+            data.forEach( unidade => {
+                const unidadeLi = document.createElement("li");
+                const template = `
+                <div class="listaInfo">
+                    <p>${unidade.name}</p>
+                    <p data-codSipac>Código SIPAC: ${unidade.cod_sipac}</p>
+                </div>
+                <img src="/globals/imagens/icones/mapa.png" alt="">
+                `
+            unidadeLi.innerHTML = template;
+            unidadeLi.dataset.id = unidade.id;
+            listaUnidades.appendChild(unidadeLi);
+            });
+            injetarModal();
+
+        } catch (error) {
+            console.error("Error:", pegarDadosParaModal);
+        }
+    }
+
     async function injetarModal() {
-        const campusClick = campusPagina.querySelectorAll(".listaContainer img");
-        campusClick.forEach( campus => {
-            campus.addEventListener("click", pegarDadosParaModal);
+        const unidadeClick = unidadesPagina.querySelectorAll(".listaContainer img");
+        unidadeClick.forEach( unidade => {
+            unidade.addEventListener("click", pegarDadosParaModal);
         })
 
         async function pegarDadosParaModal(event){
@@ -66,8 +106,8 @@ export default async function openCampus() {
             }
 
             try{
-                const campus = await (await fetch(`${url}${id}`, options)).json();
-                abrirModalEditar(campus)
+                const unidade = await (await fetch(`${url}${id}`, options)).json();
+                abrirModalEditar(unidade)
             }
             catch(error){
                 console.error("Error:", error)
@@ -75,14 +115,23 @@ export default async function openCampus() {
         }
     }
 
-    async function abrirModalEditar(campus){
-        const modal = document.querySelector("[data-modal='editarCampus']");
+    async function abrirModalEditar(unidade){
+        const modal = document.querySelector("[data-modal='editarUnidade']");
         const nome = modal.querySelector("input[name='name']");
-        const endereco = modal.querySelector("textarea[name='address']");
+        const codSipac = modal.querySelector("input[name='codSipac']");
+        const latitude = modal.querySelector("input[name='latitude']");
+        const longitude = modal.querySelector("input[name='longitude']");
+        const mapa = modal.querySelector("iframe")
 
-        nome.value = campus.name;
-        endereco.value = campus.address;
+        nome.value = unidade.name;
+        codSipac.value = unidade.cod_sipac;
+        latitude.value = unidade.latitude;
+        longitude.value = unidade.longitude;
 
+
+        
+
+        mapa.src = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1175.3286692004099!2d${unidade.longitude}!3d${unidade.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1spt-BR!2sbr!4v1729790825816!5m2!1spt-BR!2sbr`
         modal.classList.add("ativo");
 
 
@@ -90,17 +139,27 @@ export default async function openCampus() {
         fechar.addEventListener("click", fecharModal);
 
         const salvar = modal.querySelector(".confirmar");
-        salvar.addEventListener("click", salvarCampus);
+        salvar.addEventListener("click", salvarUnidade);
         
         function fecharModal(event){
             event.preventDefault();
             modal.classList.remove("ativo");
             fechar.removeEventListener("click", fecharModal);
-            salvar.removeEventListener("click", salvarCampus);
+            salvar.removeEventListener("click", salvarUnidade);
         }
 
-        async function salvarCampus(event){
+        async function salvarUnidade(event){
             event.preventDefault();
+            const dados = {
+                name: nome.value,
+                cod_sipac: parseFloat(codSipac.value),
+                latitude: parseFloat(latitude.value),
+                longitude: parseFloat(longitude.value),
+            }
+            if(!validateInputsUnidade(dados)){
+                alert("Preencha todos os campos corretamente");
+                return
+            }
             const options = {
                 method: "PUT",
                 headers: {
@@ -108,13 +167,10 @@ export default async function openCampus() {
                 },
                 credentials: "include",
                 // CRIAR UM VALIDADOR DE CAMPOS -----------------------------------------------------------------
-                body: JSON.stringify({
-                    name: nome.value,
-                    address: endereco.value,
-                }),
+                body: JSON.stringify(dados),
             }
             try{
-                const response = await fetch(`${url}${campus.id}`, options);
+                const response = await fetch(`${url}${unidade.id}`, options);
                 if(response.ok){
                     alert("Campus editado com sucesso");
                     window.location.reload()

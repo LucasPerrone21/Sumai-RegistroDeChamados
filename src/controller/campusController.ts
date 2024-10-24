@@ -4,6 +4,9 @@ import db from "../database/db";
 export default class CampusController {
     async register(req: Request, res: Response) {
         const {name, address} = req.body;
+        if (!name || !address) {
+            return res.status(400).json({message: "Dados inválidos"});
+        }
         try{
             await db.campus.create({data: {name, address}});
             return res.status(201).json({message: "Campus criado com sucesso"});

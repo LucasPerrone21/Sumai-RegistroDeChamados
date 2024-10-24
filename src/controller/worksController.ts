@@ -65,7 +65,6 @@ export class WorksController {
                 formatedDate = new Date().toISOString();
             }
 
-            console.log(formatedDate);
 
             const startOfDay = new Date(formatedDate);
             startOfDay.setHours(0,0,0,1);
@@ -77,62 +76,17 @@ export class WorksController {
             }
 
             let works
-            if(campus_id === 0){
-                works = await db.works.findMany({
-                    where:{
-                        company: {
-                            id: company
-                        },
-                        date: {
-                            gte: startOfDay,
-                            lte: endOfDay
-                        },
 
-                    },
-                    select:{
-                        id: true,
-                        date: true,
-                        place: true,
-                        status: true,
-                        unit: {
-                            select: {
-                                name: true,
-                                campus: {
-                                    select: {
-                                        name: true
-                                    }
-                                }
-                            }
-                        },
-                        WorksWorkers: {
-                            select: {
-                                worker: {
-                                    select: {
-                                        name: true,
-                                        function: {
-                                            select: {
-                                                name: true
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            
-            } else {       
-                works = await db.works.findMany({
+            works = await db.works.findMany({
                 where:{
-                    company: {
-                        id: company
-                    },
+                    company: company === 1 ? {} : { id: company }
+                    ,
                     date: {
                         gte: startOfDay,
                         lte: endOfDay
                     },
                     unit:{
-                        id_campus: campus_id
+                        id_campus: campus_id === 0 ? {} : campus_id 
                     }
                 },
                 select:{
@@ -165,8 +119,7 @@ export class WorksController {
                         }
                     }
                 }
-                });    
-            }
+            });
 
             const formattedWorks = works.map((work) => ({
                 id: work.id,

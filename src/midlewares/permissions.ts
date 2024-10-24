@@ -13,7 +13,6 @@ export default function checkRoles(permittedRoles: string[]) {
             const decodedToken = jwt.decode(token as string) as { email: string};
             const email = decodedToken.email;
             const user = await db.user.findUnique({where: {email}});
-            console.log(user);
             if(!user){
                 return res.status(401).json({ message: 'Usuário não autenticado' });
             }
