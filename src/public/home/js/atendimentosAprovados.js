@@ -1,9 +1,10 @@
 import apiURL from "../../globals/js/apiURL.js";
 import gerarGrafico from "./grafico.js";
+import Loading from "../../globals/js/loading.js";
 
 export default async function atendimentosAprovados() {
     const dataHoje = new Date().toISOString().split('T')[0];
-    const url = apiURL + `/works/0/${dataHoje}`; // LEMBRAR DE ALTERAR A DATA PARA A DATA DE HOJE
+    const url = apiURL + `/works/0/${dataHoje}`;
     const options = {
         method: 'GET',
         headers: {
@@ -50,6 +51,8 @@ export default async function atendimentosAprovados() {
     }
 
     async function abrirModal() {
+        const load = new Loading();
+        load.show();
         const modal = document.querySelector('[data-modal="editar"]');
         modal.classList.add('ativo');
         const id = this.parentElement.dataset.id;
@@ -73,6 +76,8 @@ export default async function atendimentosAprovados() {
         catch(err){
             console.error(err)
         }
+
+        load.hide();
 
         function editarAtendimento(event){
             const id = event.target.closest('.modal-container').dataset.id;

@@ -1,5 +1,5 @@
 import apiURL from "../../globals/js/apiURL.js";
-
+import Loading from "../../globals/js/loading.js";
 
 export default async function antendidmentosPendentes() {
     const campusSelect = document.querySelector('#campus');
@@ -11,6 +11,10 @@ export default async function antendidmentosPendentes() {
     buscarPendentes();
 
     async function buscarPendentes() {
+
+        const load = new Loading();
+
+        load.show();
         const campus = campusSelect.value;
         const data = dataInput.value;
         const url = apiURL + `/works/${campus}/${data}`;
@@ -29,6 +33,7 @@ export default async function antendidmentosPendentes() {
         } catch (err) {
             criarListaPendentes([]);
         }
+        load.hide();
     }
 
     function criarListaPendentes(data) {
@@ -80,6 +85,8 @@ export default async function antendidmentosPendentes() {
     }
 
     async function abrirModal(event) {
+        const load = new Loading();
+        load.show();
         const id = event.target.closest('li').dataset.id;
         const url = apiURL + `/works/${id}`;
         const options = {
@@ -95,6 +102,7 @@ export default async function antendidmentosPendentes() {
         }catch(err){
             console.error(err)
         }
+        load.hide();
     }
 
     function handleModal(data){

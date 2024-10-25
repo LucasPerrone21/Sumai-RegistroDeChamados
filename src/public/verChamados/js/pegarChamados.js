@@ -1,4 +1,5 @@
 import apiURL from "../../globals/js/apiURL.js"
+import Loading from "../../globals/js/loading.js"
 
 export default function pegarChamados(){
     const campus = document.querySelector("#campus")
@@ -6,8 +7,12 @@ export default function pegarChamados(){
     const button = document.querySelector("#btn-pesquisa")
 
     button.addEventListener("click", getChamados)
+
+    button.click()
     
     async function getChamados(event){
+        const load = new Loading()
+        load.show()
         event.preventDefault()
         const url = `${apiURL}/works/${campus.value}/${data.value}`
         const options = {
@@ -21,12 +26,12 @@ export default function pegarChamados(){
 
         try{
             const data = await (await fetch(url, options)).json()
-            console.log(data)
             mostrarChamados(data)
         }
         catch(error){
             console.log(error)
         }
+        load.hide()
     }
 
 
@@ -55,6 +60,8 @@ export default function pegarChamados(){
 
     async function abrirChamadoModal(event){
         event.preventDefault()
+        const load = new Loading()
+        load.show()
         const id = event.target.closest("li").dataset.id
         const chamado = await getChamadoById(id)
         const modal = document.querySelector(".modalContainer")
@@ -89,6 +96,8 @@ export default function pegarChamados(){
         const btnVoltar = modal.querySelector(".btnRevisao")
         btnVoltar.addEventListener("click", fecharModal)
 
+        load.hide()
+
         async function fecharModal(){
             modal.classList.remove("ativo")
             btnVoltar.removeEventListener("click", fecharModal)
@@ -116,5 +125,4 @@ export default function pegarChamados(){
         }
     }
 
-    button.click()
 }

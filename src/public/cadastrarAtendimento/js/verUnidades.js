@@ -14,7 +14,6 @@ export default async function verUnidades(){
             credentials: 'include',
         }
         const campusList = await (await fetch(`${apiUrl}/campus` , options)).json();
-        console.log(campusList);
         
         campusList.sort((a, b) => a.name.localeCompare(b.nome));
 

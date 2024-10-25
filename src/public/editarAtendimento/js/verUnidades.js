@@ -43,7 +43,7 @@ export default async function verUnidades(){
                 },
                 credentials: 'include',
             }
-            const unidadesList = await (await fetch(`${apiUrl}/unit/${id}` , options)).json();
+            const unidadesList = await (await fetch(`${apiUrl}/unit/campus/${id}` , options)).json();
             unidadesList.sort((a, b) => a.name.localeCompare(b.nome));
             unidadesList.forEach((unidade) => {
                 const option = document.createElement('option');

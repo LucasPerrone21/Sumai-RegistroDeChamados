@@ -21,7 +21,6 @@ export default function abrirBusca() {
         }
         try{
             const funcionarios = await ( await fetch(url, options)).json()
-            console.log(funcionarios);
             mostrarFuncionarios(funcionarios);
 
         }catch(error){

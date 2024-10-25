@@ -3,7 +3,6 @@ import deletarFuncionario from "./deletarFuncionario.js";
 
 export default async function getInfo(){
     const idAtendimento = window.location.pathname.split('/').pop();
-    console.log(idAtendimento);
     
     const url = `${apiURL}/works/${idAtendimento}`;
 
@@ -17,7 +16,6 @@ export default async function getInfo(){
 
     try{
         const atendimento = await ( await fetch(url, options)).json()
-        console.log(atendimento);
         mostrarInfo(atendimento);
     }
     catch(error){

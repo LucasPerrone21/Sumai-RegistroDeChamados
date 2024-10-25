@@ -11,7 +11,6 @@ export default function gerarGrafico(dados){
             campi[dado.campus] = 1
         }
     }
-    console.log(campi)
 
     const data = {
         labels: Object.keys(campi),

@@ -170,4 +170,55 @@
 
 .atendimentos-lista li img{
     padding: .5rem;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px){
+    .main-container{
+        padding: 0;
+        margin-top: 3rem;
+    }
+
+    .main-container-interno{
+        border-radius: 0;
+    }
+
+    .main-container-interno h1{
+        font-size: 1.5rem;
+
+    }
+
+    .section h2{
+        font-size: 1.2rem;
+    }
+
+    .container-atendimentos{
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+
+    .container-atendimentos ul{
+        width: 100%;
+    }
+
+    .container-atendimentos canvas{
+        max-width: 300px !important;
+        min-width: 300px !important;
+
+        max-height: 300px !important;
+        min-height: 300px !important;
+    }
+
+    .input-container{
+        flex-direction: column;
+    }
+
+    .input-container div{
+        width: 100%;
+    }
+
+    .pendentes button{
+        width: 100%;
+    }
+    
 }

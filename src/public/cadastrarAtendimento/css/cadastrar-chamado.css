@@ -118,7 +118,7 @@
 
 .funcionarios-container{
     margin: 1rem 0 ;
-    height: 300px;
+    max-width: 300px;
     overflow-y: scroll;
 }
 
@@ -156,6 +156,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
 }
 
 .containerBotoes a{
@@ -164,7 +165,6 @@
     color: white;
     border-radius: 10px;
     text-decoration: none;
-    margin: 0 1rem;
     font-size: 1rem;
     transition: 200ms;
 

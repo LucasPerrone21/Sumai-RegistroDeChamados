@@ -66,10 +66,11 @@ export class WorksController {
             }
 
 
-            const startOfDay = new Date(formatedDate);
+            let startOfDay = new Date(formatedDate);
             startOfDay.setHours(0,0,0,1);
-            const endOfDay = new Date(formatedDate);
+            let endOfDay = new Date(formatedDate);
             endOfDay.setHours(23,59,59,999);
+
 
             if(!company){
                 return res.status(401).json({ message: 'Usuário não autorizado' });
@@ -79,11 +80,9 @@ export class WorksController {
 
             works = await db.works.findMany({
                 where:{
-                    company: company === 1 ? {} : { id: company }
-                    ,
+                    company: company === 1 ? {} : { id: company },
                     date: {
-                        gte: startOfDay,
-                        lte: endOfDay
+                        equals: formatedDate
                     },
                     unit:{
                         id_campus: campus_id === 0 ? {} : campus_id 
@@ -133,8 +132,6 @@ export class WorksController {
                     function: worker.worker.function.name
                 }))
             }));
-
-            console.log(formattedWorks);
 
 
             if(formattedWorks.length === 0){
