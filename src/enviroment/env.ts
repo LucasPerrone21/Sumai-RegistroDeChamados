@@ -11,9 +11,6 @@ const envSchema = z.object({
     APP_PORT: z.string().transform(Number).default('3333'),
     DATABASE_URL: z.string().url(),
     APP_SECRET: z.string(),
-    APP_URL: z.string().url(),
-    APP_FRONTEND_URL: z.string().url(),
-  // Adicione outras variáveis conforme necessário
 });
 
 const envTest = envSchema.safeParse(process.env)
