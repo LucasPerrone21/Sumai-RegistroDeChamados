@@ -1,4 +1,5 @@
 import apiURL from "../../globals/js/apiURL.js";
+import Loading from "../../globals/js/loading.js";
 
 export default function enviarChamado() {
     const form = document.querySelector('.form-container');
@@ -7,7 +8,7 @@ export default function enviarChamado() {
     data.value = dataAtual.toISOString().split('T')[0];
     form.addEventListener('submit', checarFormulario);
 
-    function checarFormulario(event) {
+    async function checarFormulario(event) {
         event.preventDefault();
 
         const campus = document.querySelector('#campus').value;
@@ -34,8 +35,11 @@ export default function enviarChamado() {
             return
         }
 
-
-        enviarChamadoAPI(chamado);
+        
+        const load = new Loading();
+        load.show();
+        await enviarChamadoAPI(chamado);
+        load.hide();
 
         async function enviarChamadoAPI(chamado){
             const url = `${apiURL}/works`;

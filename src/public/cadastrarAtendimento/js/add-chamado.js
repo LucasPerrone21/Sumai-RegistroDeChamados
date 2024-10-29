@@ -4,11 +4,17 @@ import abrirBusca from "./abrirBusca.js";
 import enviarChamado from "./enviarChamado.js";
 import verUnidades from "./verUnidades.js";
 import logout from "../../globals/js/logout.js";
+import Loading from "../../globals/js/loading.js";
 
-checkToken();
-logout();
+const load = new Loading();
+
+
+load.show()
+await checkToken();
+await logout();
 burguerMenu();
-abrirBusca();
+await abrirBusca();
 enviarChamado();
-verUnidades();
+await verUnidades();
+load.hide()
 /* verUnidades(); */

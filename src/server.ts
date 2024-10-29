@@ -9,6 +9,7 @@ import campusRoutes from "./routes/campusRoutes";
 import workersRoute from "./routes/workers";
 import worksRoute from "./routes/worksRoutes";
 import viewRoutes from "./routes/viewRoutes";
+import companyRoute from "./routes/companyRoutes";
 import { env } from "./enviroment/env";
 
 
@@ -16,7 +17,6 @@ import { env } from "./enviroment/env";
 
 const app = Express();
 app.use(cors({
-  origin: env?.APP_FRONTEND_URL,
   credentials: true
 }));
 app.use(cookieParser());
@@ -38,6 +38,7 @@ app.use("/unit", unitRoutes);
 app.use("/campus", campusRoutes);
 app.use("/workers", workersRoute);
 app.use("/works", worksRoute);
+app.use("/company", companyRoute )
 app.use("/", viewRoutes);
 
 

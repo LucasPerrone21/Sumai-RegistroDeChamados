@@ -61,7 +61,6 @@ model Companies{
   WorkerFunction    WorkerFunction[]
   Works             Works[]
   users             User[]
-  
 }
 
 model Workers{

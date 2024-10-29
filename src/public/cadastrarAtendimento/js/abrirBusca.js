@@ -1,14 +1,15 @@
 import apiURL from "../../globals/js/apiURL.js";
+import Loading from "../../globals/js/loading.js";
 import addFuncionarioChamado from "./addFuncionarioChamado.js";
 
-export default function abrirBusca() {
+export default async function abrirBusca() {
     const buscaResultados = document.querySelector('.containerBusca ul');
     const inputBusca = document.querySelector('#busca');
     inputBusca.addEventListener('click', abrirMenuBusca);
     inputBusca.addEventListener('blur', fecharMenuBusca);
+    let itens = []
     buscarFuncionarios();
 
-    let itens = []
 
     async function buscarFuncionarios(){
         const url = `${apiURL}/workers/`;
@@ -79,7 +80,7 @@ export default function abrirBusca() {
         }
     }
 
-    function addFuncionario(event){
+    async function addFuncionario(event){
         inputBusca.value = '';
         itens.forEach(item => {
             buscaResultados.appendChild(item);
@@ -87,6 +88,9 @@ export default function abrirBusca() {
         fecharMenuBusca(event);
         const li = event.target.closest('li');
         const id = li.dataset.id;
-        addFuncionarioChamado(id);
+        const load = new Loading();
+        load.show();
+        await addFuncionarioChamado(id);
+        load.hide();
     }
 }
