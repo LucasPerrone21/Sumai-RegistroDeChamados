@@ -1,11 +1,11 @@
 import apiURL from "../../globals/js/apiURL.js";
-import validateInputsUnidade from "./validarInputsUnidade.js";
+import validateInputsTercerizada from "./validarInputsTercerizada.js";
 
-const url = `${apiURL}/unit/`;
-const unidadesPagina = document.querySelector("section[data-tipo=unidades]");
+const url = `${apiURL}/company/`;
+const unidadesPagina = document.querySelector("section[data-tipo=empresas]");
 
 
-export default async function openUnidades() {
+export default async function openTercerizadas() {
     let btnAdicionar = unidadesPagina.querySelector(".btn-add");
 
     const newBtn = btnAdicionar.cloneNode(true);
@@ -13,22 +13,15 @@ export default async function openUnidades() {
     btnAdicionar = unidadesPagina.querySelector(".btn-add");
     btnAdicionar.addEventListener("click", abrirModalCadastro);
 
-    let select = unidadesPagina.querySelector("select");
-
-    const newSelect = select.cloneNode(true);
-    select.parentNode.replaceChild(newSelect, select);
-    select = unidadesPagina.querySelector("select");
-
-    select.addEventListener("change", filter);
 
 
 
-    await getUnidades();
+    await getEmpresas();
     injetarModal();
 
-    async function getUnidades() {
+    async function getEmpresas() {
         try {
-            const response = await fetch(url + "campus/0/", {
+            const response = await fetch(url, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,56 +29,23 @@ export default async function openUnidades() {
                 credentials: "include",
             });
             const data = await response.json();
-            const listaUnidades = unidadesPagina.querySelector(".listaContainer");
-            listaUnidades.innerHTML = "";
-            data.forEach( unidade => {
-                const unidadeLi = document.createElement("li");
+            const listaEmpresas = unidadesPagina.querySelector(".listaContainer");
+            listaEmpresas.innerHTML = "";
+            data.forEach( empresa => {
+                const empresaLi = document.createElement("li");
                 const template = `
                 <div class="listaInfo">
-                    <p>${unidade.name}</p>
-                    <p data-codSipac>Código SIPAC: ${unidade.cod_sipac}</p>
+                    <p>${empresa.name}</p>
+                    <p>E-mail: ${empresa.email}</p>
                 </div>
                 <img src="/globals/imagens/icones/mapa.png" alt="">
                 `
-            unidadeLi.innerHTML = template;
-            unidadeLi.dataset.id = unidade.id;
-            listaUnidades.appendChild(unidadeLi);
+            empresaLi.innerHTML = template;
+            empresaLi.dataset.id = empresa.id;
+            listaEmpresas.appendChild(empresaLi);
             });
         } catch (error) {
             console.error("Error:", error);
-        }
-    }
-
-    async function filter() {
-        const value = select.value;
-        try {
-            const response = await fetch(url + `campus/${value}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-            });
-            const data = await response.json();
-            const listaUnidades = unidadesPagina.querySelector(".listaContainer");
-            listaUnidades.innerHTML = "";
-            data.forEach( unidade => {
-                const unidadeLi = document.createElement("li");
-                const template = `
-                <div class="listaInfo">
-                    <p>${unidade.name}</p>
-                    <p data-codSipac>Código SIPAC: ${unidade.cod_sipac}</p>
-                </div>
-                <img src="/globals/imagens/icones/mapa.png" alt="">
-                `
-            unidadeLi.innerHTML = template;
-            unidadeLi.dataset.id = unidade.id;
-            listaUnidades.appendChild(unidadeLi);
-            });
-            injetarModal();
-
-        } catch (error) {
-            console.error("Error:", pegarDadosParaModal);
         }
     }
 
@@ -115,23 +75,19 @@ export default async function openUnidades() {
         }
     }
 
-    async function abrirModalEditar(unidade){
-        const modal = document.querySelector("[data-modal='editarUnidade']");
+    async function abrirModalEditar(empresa){
+        console.log(empresa)
+        const modal = document.querySelector("[data-modal='editarEmpresa']");
         const nome = modal.querySelector("input[name='name']");
-        const codSipac = modal.querySelector("input[name='codSipac']");
-        const latitude = modal.querySelector("input[name='latitude']");
-        const longitude = modal.querySelector("input[name='longitude']");
-        const mapa = modal.querySelector("iframe")
+        const email = modal.querySelector("input[name='email']");
+        const cnpj = modal.querySelector("input[name='cnpj']");
+        const tel = modal.querySelector("input[name='telefone']");
 
-        nome.value = unidade.name;
-        codSipac.value = unidade.cod_sipac;
-        latitude.value = unidade.latitude;
-        longitude.value = unidade.longitude;
+        nome.value = empresa.name;
+        email.value = empresa.email;
+        cnpj.value = empresa.cnpj;
+        tel.value = empresa.tel;
 
-
-        
-
-        mapa.src = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1175.3286692004099!2d${unidade.longitude}!3d${unidade.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1spt-BR!2sbr!4v1729790825816!5m2!1spt-BR!2sbr`
         modal.classList.add("ativo");
 
 
@@ -139,24 +95,24 @@ export default async function openUnidades() {
         fechar.addEventListener("click", fecharModal);
 
         const salvar = modal.querySelector(".confirmar");
-        salvar.addEventListener("click", salvarUnidade);
+        salvar.addEventListener("click", salvarTercerizada);
         
         function fecharModal(event){
             event.preventDefault();
             modal.classList.remove("ativo");
             fechar.removeEventListener("click", fecharModal);
-            salvar.removeEventListener("click", salvarUnidade);
+            salvar.removeEventListener("click", salvarTercerizada);
         }
 
-        async function salvarUnidade(event){
+        async function salvarTercerizada(event){
             event.preventDefault();
             const dados = {
                 name: nome.value,
-                cod_sipac: parseFloat(codSipac.value),
-                latitude: parseFloat(latitude.value),
-                longitude: parseFloat(longitude.value),
+                email: email.value,
+                cnpj: cnpj.value,
+                tel: tel.value,
             }
-            if(!validateInputsUnidade(dados)){
+            if(!validateInputsTercerizada(dados)){
                 alert("Preencha todos os campos corretamente");
                 return
             }
@@ -166,11 +122,10 @@ export default async function openUnidades() {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                // CRIAR UM VALIDADOR DE CAMPOS -----------------------------------------------------------------
                 body: JSON.stringify(dados),
             }
             try{
-                const response = await fetch(`${url}${unidade.id}`, options);
+                const response = await fetch(`${url}${empresa.id}`, options);
                 if(response.ok){
                     alert("Campus editado com sucesso");
                     window.location.reload()
@@ -194,12 +149,12 @@ export default async function openUnidades() {
 
 
     async function abrirModalCadastro() {
-        const modal = document.querySelector("[data-modal='cadastrarUnidade']");
-        const campus = modal.querySelector("select[name='campus']");
+        const modal = document.querySelector("[data-modal='cadastrarEmpresa']");
         const nome = modal.querySelector("input[name='name']");
-        const codSipac = modal.querySelector("input[name='codSipac']");
-        const latitude = modal.querySelector("input[name='latitude']");
-        const longitude = modal.querySelector("input[name='longitude']");
+        const email = modal.querySelector("input[name='email']");
+        const cnpj = modal.querySelector("input[name='cnpj']");
+        const tel = modal.querySelector("input[name='telefone']");
+
 
         modal.classList.add("ativo");
 
@@ -208,24 +163,24 @@ export default async function openUnidades() {
         const salvar = modal.querySelector(".confirmar");
 
         fechar.addEventListener("click", fecharModal);
-        salvar.addEventListener("click", cadastrarUnidade);
+        salvar.addEventListener("click", cadastrarTercerizada);
 
         modal.classList.add("ativo");
 
 
-        async function cadastrarUnidade(event) {
+        async function cadastrarTercerizada(event) {
             event.preventDefault();
 
             const dados = {
                 name: nome.value,
-                id_campus: parseInt(campus.value),
-                cod_sipac: parseFloat(codSipac.value),
-                latitude: parseFloat(latitude.value),
-                longitude: parseFloat(longitude.value),
-                campus: parseInt(campus.value),
+                email: email.value,
+                cnpj: cnpj.value,
+                tel: tel.value,
             }
 
-            if(!validateInputsUnidade(dados)){
+            console.log(dados);
+
+            if(!validateInputsTercerizada(dados)){
                 alert("Preencha todos os campos corretamente");
                 return;
             }
@@ -260,7 +215,7 @@ export default async function openUnidades() {
             event.preventDefault();
             modal.classList.remove("ativo");
             fechar.removeEventListener("click", fecharModal);
-            salvar.removeEventListener("click", cadastrarUnidade);
+            salvar.removeEventListener("click", cadastrarTercerizada);
         }
 
     }

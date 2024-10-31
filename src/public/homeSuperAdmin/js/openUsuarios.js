@@ -104,6 +104,7 @@ export default async function openUsuarios() {
         const nome = modal.querySelector("input[name='name']");
         const email = modal.querySelector("input[name='email']");
         const empresa = modal.querySelector("select[name='empresa']");
+        const senha = modal.querySelector("input[type='password']");
         const permissao = modal.querySelectorAll("input[name='permissao']");
 
 
@@ -115,6 +116,7 @@ export default async function openUsuarios() {
         permissao.forEach( permissao => {
             if(permissao.value === usuario.role){
                 permissao.checked = true;
+                console.log(permissao)
             }
         })
 
@@ -136,18 +138,31 @@ export default async function openUsuarios() {
 
         async function salvarUsuario(event){
             event.preventDefault();
+
+            let role
+
+            for( let permissaoItem of permissao){
+                if(permissaoItem.checked){
+                    role = permissaoItem.value;
+                }
+            }
+
+            const dados = {
+                name: nome.value,
+                email: email.value,
+                company: empresa.value,
+                role: role,
+                password: senha.value,
+            }
+
+
             const options = {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({
-                    name: nome.value,
-                    email: email.value,
-                    company: empresa.value,
-                    role: permissao.value,
-                }),
+                body: JSON.stringify(dados),
             }
             try{
                 const response = await fetch(`${url}${usuario.id}`, options);

@@ -94,8 +94,12 @@ export default async function atendimentosAprovados() {
         const unidade = modal.querySelector('.modalUnidade');
         const status = modal.querySelector('.modalStatus');
         const funcionarios = modal.querySelector('.listaFuncionarios')
+        const responsavel = modal.querySelector('.modalResponsavel')
+        const aprovador = modal.querySelector('.modalAprovador') 
         funcionarios.innerHTML = ''
 
+        aprovador.textContent = data.aprovedBy
+        responsavel.textContent = data.createdBy
         local.textContent = data.place;
         campus.textContent = data.campus
         unidade.textContent = data.unit

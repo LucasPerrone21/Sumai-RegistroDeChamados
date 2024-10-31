@@ -153,6 +153,12 @@ export class WorksController {
                     date: true,
                     place: true,
                     status: true,
+                    user_id: {
+                        select:{
+                            name: true
+                        }
+                    } ,
+                    aprovedBy: true,
                     unit: {
                         select: {
                             name: true,
@@ -188,6 +194,9 @@ export class WorksController {
                 return res.status(404).json({ message: 'Chamado não encontrado' });
             }
 
+
+
+
             const formattedWork = {
                 id: work.id,
                 date: work.date,
@@ -195,6 +204,8 @@ export class WorksController {
                 unit: work.unit.name,
                 campus: work.unit.campus.name,
                 status: work.status,
+                createdBy: work.user_id.name,
+                aprovedBy: work.aprovedBy,
                 workers: work.WorksWorkers.map((worker) => ({
                     name: worker.worker.name,
                     function: worker.worker.function.name,

@@ -112,6 +112,7 @@ export default async function antendidmentosPendentes() {
         const local = modal.querySelector('h3');
         const campus = modal.querySelector('.modalCampus');
         const unidade = modal.querySelector('.modalUnidade');
+        const responsavel = modal.querySelector('.modalResponsavel');
         const status = modal.querySelector('.modalStatus');
         const btnVoltar = modal.querySelector('.btn-voltar');
         const btnAprovar = modal.querySelector('.btn-aprovar');
@@ -127,6 +128,7 @@ export default async function antendidmentosPendentes() {
         local.textContent = data.place;
         campus.textContent = data.campus;
         unidade.textContent = data.unit;
+        responsavel.textContent = data.createdBy;
 
         if(data.status === 'PENDING'){
             status.textContent = 'Pendente'

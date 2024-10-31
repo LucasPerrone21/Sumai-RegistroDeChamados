@@ -8,7 +8,6 @@ export default class CompanyController {
         const companySchema = z.object({
             name: z.string(),
             email: z.string().email(),
-            password: z.string().min(6),
             tel: z.string().min(10),
             cnpj: z.string().min(14),
         });
@@ -16,6 +15,7 @@ export default class CompanyController {
 
         const result = companySchema.safeParse(req.body);
         if (result.error) {
+            console.log(result.error);
             return res.status(400).json({error: result.error});
         }
 

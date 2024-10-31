@@ -2,6 +2,7 @@ import Loading from "../../globals/js/loading.js";
 import openUsuarios from "./openUsuarios.js";
 import openCampus from "./openCampus.js";
 import openUnidades from "./openUnidades.js";
+import openTercerizadas from "./openTercerizadas.js";
 
 
 export default async function mudarAbas(){
@@ -42,6 +43,9 @@ export default async function mudarAbas(){
         }
         else if(tipo === 'unidades'){
             await openUnidades();
+        }
+        else if(tipo === 'empresas'){
+            await openTercerizadas();
         }
 
         if (burguerMenuItens.classList.contains('ativo')){

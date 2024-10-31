@@ -100,83 +100,13 @@
                     <option value="4">Unidades Dispersas</option>
                 </select>
             <ul class="listaContainer">
-                <li>
-                    <div class="listaInfo">
-                        <p>Ondina</p>
-                        <p>Av. Milton Santos, s/nº - Ondina, Salvador - BA, 40170-110</p>
-                    </div>
-                    <img src="/globals/imagens/icones/mapa.png" alt="">
-                </li>
-                <li>
-                    <div class="listaInfo">
-                        <p>Ondina</p>
-                        <p>Av. Milton Santos, s/nº - Ondina, Salvador - BA, 40170-110</p>
-                    </div>
-                    <img src="/globals/imagens/icones/mapa.png" alt="">
-                </li>
-                <li>
-                    <div class="listaInfo">
-                        <p>Ondina</p>
-                        <p>Av. Milton Santos, s/nº - Ondina, Salvador - BA, 40170-110</p>
-                    </div>
-                    <img src="/globals/imagens/icones/mapa.png" alt="">
-                </li>
-                <li>
-                    <div class="listaInfo">
-                        <p>Ondina</p>
-                        <p>Av. Milton Santos, s/nº - Ondina, Salvador - BA, 40170-110</p>
-                    </div>
-                    <img src="/globals/imagens/icones/mapa.png" alt="">
-                </li>
-                <li>
-                    <div class="listaInfo">
-                        <p>Ondina</p>
-                        <p>Av. Milton Santos, s/nº - Ondina, Salvador - BA, 40170-110</p>
-                    </div>
-                    <img src="/globals/imagens/icones/mapa.png" alt="">
-                </li>
-
-
-                
             </ul>
             <button class="btn-add"><img src="/globals/imagens/icones/campus.png" alt=""><p>Adicionar unidade</p></button>
         </section>
 
         <section class="main-section" data-tipo="empresas">
             <h1>Empresas</h1>
-            <ul class="listaContainer">
-                <li>
-                    <div class="listaInfo">
-                        <p>Superintendência de Meio Ambiente e Infraestrutura - SUMAI UFBA</p>
-                        <p>example@example.br</p>
-                    </div>
-                    <img src="/globals/imagens/icones/empresa.png" alt="">
-                </li>
-                <li>
-                    <div class="listaInfo">
-                        <p>RCS Tecnologia</p>
-                        <p>example@example.br</p>
-                    </div>
-                    <img src="/globals/imagens/icones/empresa.png" alt="">
-                </li>
-                <li>
-                    <div class="listaInfo">
-                        <p>Arconfrio</p>
-                        <p>example@example.br</p>
-                    </div>
-                    <img src="/globals/imagens/icones/empresa.png" alt="">
-                </li>
-                <li>
-                    <div class="listaInfo">
-                        <p>Elevadores e CIA</p>
-                        <p>example@example.br</p>
-                    </div>
-                    <img src="/globals/imagens/icones/empresa.png" alt="">
-                </li>
-
-
-
-                
+            <ul class="listaContainer">               
             </ul>
             <button class="btn-add"><img src="/globals/imagens/icones/campus.png" alt=""><p>Adicionar empresa</p></button>
         </section>
@@ -401,7 +331,7 @@
             </div>
             <div class="inputUnico">
                 <label for="senha">Senha:</label>
-                <input type="password" required placeholder="******" minlength="6">
+                <input type="password" required placeholder="******" minlength="6" name="senha">
             </div>
             <div class="inputUnico">
                 <label for="empresa">Empresa:</label>
@@ -496,7 +426,7 @@
 
     <section data-modal="editarCampus" class="">
         <form class="containerModal formCadastro">
-            <h2>Editar Usuário</h2>
+            <h2>Editar Campus</h2>
             <div class="inputUnico">
                 <label for="name">Nome:</label>
                 <input type="text" name="name">
@@ -514,7 +444,7 @@
 
     <section data-modal="cadastrarCampus" class="">
         <form class="containerModal formCadastro">
-            <h2>Editar Campus</h2>
+            <h2>Cadastrar Campus</h2>
             <div class="inputUnico">
                 <label for="name">Nome:</label>
                 <input type="text" name="name">
@@ -564,6 +494,110 @@
         </form>
     </section>
 
+    <section data-modal="cadastrarUnidade" class="">
+        <form class="containerModal formCadastro">
+            <h2>Cadastrar Unidade</h2>
+            <div class="inputUnico">
+                <label for="campus">Campus:</label>
+                <select name="campus">
+                    <option value="1">Ondina</option>
+                    <option value="2">Canela</option>
+                    <option value="3">Federação</option>
+                    <option value="4">Unidades Dispersas</option>
+                </select>
+            </div>
+            <div class="inputDuplo">
+                <div class="inputUnico">
+                    <label for="name">Nome:</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="inputUnico">
+                    <label for="codSipac">Cod. SIPAC:</label>
+                    <input type="number" name="codSipac">
+                </div>
+            </div>
+            
+            <div class="inputDuplo">
+                <div class="inputUnico">
+                    <label for="latitude">Latitude:</label>
+                    <input type="number" name="latitude">
+                </div>
+                <div class="inputUnico">
+                    <label for="longitude">Longitude:</label>
+                    <input type="number" name="longitude">
+                </div>
+            </div>
+
+            <div class="containerBotoes">
+                <button class="btn-modal fechar">Fechar</button>
+                <button class="btn-modal confirmar">Salvar</button>       
+            </div>
+        </form>
+    </section>
+
+    <section data-modal="editarEmpresa" class="">
+        <form class="containerModal formCadastro">
+            <h2>Editar Empresa</h2>
+            <div class="inputUnico">
+                <label for="name">Nome:</label>
+                <input type="text" name="name">
+            </div>
+            
+            <div class="inputUnico">
+                    <label for="email">E-mail:</label>
+                    <input type="email" name="email">
+                </div>
+
+            <div class="inputDuplo">
+                <div class="inputUnico">
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" name="telefone">
+                </div>
+                <div class="inputUnico">
+                    <label for="cnpj">CNPJ:</label>
+                    <input type="number" name="cnpj">
+                </div>
+            </div>
+
+            
+            <div class="containerBotoes">
+                <button class="btn-modal fechar">Fechar</button>
+                <button class="btn-modal confirmar">Salvar</button>       
+            </div>
+        </form>
+    </section>
+
+    <section data-modal="cadastrarEmpresa" class="">
+        <form class="containerModal formCadastro">
+            <h2>Cadastrar Empresa</h2>
+            <div class="inputUnico">
+                <label for="name">Nome:</label>
+                <input type="text" name="name">
+            </div>
+            
+            <div class="inputUnico">
+                    <label for="email">E-mail:</label>
+                    <input type="email" name="email">
+                </div>
+
+            <div class="inputDuplo">
+                <div class="inputUnico">
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" name="telefone">
+                </div>
+                <div class="inputUnico">
+                    <label for="cnpj">CNPJ:</label>
+                    <input type="number" name="cnpj">
+                </div>
+            </div>
+
+            
+            <div class="containerBotoes">
+                <button class="btn-modal fechar">Fechar</button>
+                <button class="btn-modal confirmar">Salvar</button>       
+            </div>
+        </form>
+    </section>
 
 
 

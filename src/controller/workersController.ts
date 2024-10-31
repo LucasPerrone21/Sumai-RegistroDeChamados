@@ -9,9 +9,7 @@ export class WorkersController {
         const decodedToken = jwt.decode(token as string) as { email: string, permissions: string[], company: number };
 
         try {
-            let workers;
-            if (decodedToken.company === 1){
-               workers = await db.workers.findMany({
+            let workers = await db.workers.findMany({
                 select: {
                     id: true,
                     name: true,
@@ -21,27 +19,12 @@ export class WorkersController {
                         },
                     },
                 },
-               })
-            }
-            else{
-                workers = await db.workers.findMany({
-                    select: {
-                        id: true,
-                        name: true,
-                        function: {
-                            select: {
-                                name: true,
-                            },
-                        },
-                    },
-                    where:{
-                        company: {
-                            id: decodedToken.company
-                        }
+                where:{
+                    company: {
+                        id: decodedToken.company == 1 ? {} : decodedToken.company 
                     }
-                });
-            }
-
+                }
+            });
 
             const formattedWorkers = workers.map((worker) => ({
                 id: worker.id,
@@ -57,8 +40,10 @@ export class WorkersController {
 
 
     async getWorker(req: Request, res: Response) {
-
         const { id } = req.params;
+
+        const token = req.cookies.token;
+        const decodedToken = jwt.decode(token as string) as { email: string, permissions: string[], company: number };
 
         const worker = await db.workers.findUnique({
             where: {
@@ -67,6 +52,11 @@ export class WorkersController {
             select: {
                 id: true,
                 name: true,
+                company: {
+                    select: {
+                        id: true,
+                    },
+                },
                 function: {
                     select: {
                         name: true,
@@ -75,8 +65,10 @@ export class WorkersController {
             },
         });
 
-        if (!worker) {
-            return res.status(404).json({ message: "Worker not found" });
+
+
+        if (!worker || worker.company.id != decodedToken.company) {
+            return res.status(404).json({ message: "Erro ao buscar trabalhador" });
         }
 
         const formattedWorker = {

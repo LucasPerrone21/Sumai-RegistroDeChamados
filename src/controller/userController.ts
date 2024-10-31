@@ -98,5 +98,55 @@ export default class UserController {
             return res.status(500).json({ message: 'Não foi possível buscar o usuário', error: error });
         }
     }
+
+    async updateUser(req: Request, res: Response) {
+        const { id } = req.params as { id: string };
+        const { email, name, role, company, password } = req.body;
+        if (!id || !email || !name || !role || !company) {
+            console.log(req.body);
+            return res.status(400).json({ message: 'Preencha todos os campos' });
+        }
+
+        const emailSchema = z.string().email();
+        const nameSchema = z.string().min(3);
+        const emailResult = emailSchema.safeParse(email);
+        const nameResult = nameSchema.safeParse(name);
+
+        let codedPassword: null | string = null
+        if(password){
+            const passwordSchema = z.string().min(6);
+            const passwordResult = passwordSchema.safeParse(password);
+            if (!passwordResult.success) {
+                return res.status(400).json({ message: 'Sua senha deve conter pelo menos 6 caracteres' });
+            }
+            codedPassword = await bcrypt.hash(password, 15);
+        }
+
+
+        if (!emailResult.success) {
+            return res.status(400).json({ message: 'Email Invalido' });
+        }
+        if (!nameResult.success) {
+            return res.status(400).json({ message: 'Seu nome deve conter pelo menos 3 caracteres' });
+        }
+        const formatedCompany = parseInt(company);
+
+        try {
+            const user = await db.user.findUnique({where: {id}});
+            if(!user){
+                return res.status(404).json({ message: 'Usuário não encontrado' });
+            }
+            await db.user.update({where: {id}, data: {
+                email,
+                name,
+                role,
+                company: {connect: {id: formatedCompany}},
+                password: typeof codedPassword === 'string' ? codedPassword : user.password
+            }});
+            return res.status(200).json({ message: 'Usuário atualizado com sucesso' });
+        } catch (error:any) {
+            return res.status(500).json({ message: 'Não foi possível atualizar o usuário', error: error });
+        }
+    }
 }
 
